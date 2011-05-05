@@ -1,0 +1,19 @@
+---
+layout: post
+title: How to build the ferret gem for Ruby 1.9.2 on Mac OS X
+date: 2011-04-19
+---
+<p>Apparently the ferret gem is not currently supported for Mac OS X on Ruby 1.9.2.  Including <code>gem 'ferret'</code> in your Gemfile and running <code>bundle install</code> results in the following error, which I've abbreviated:</p>
+<pre>Installing ferret (0.11.6) with native extensions
+/Users/dstutzman/.rvm/rubies/ruby-1.9.2-p180/lib/ruby/site_ruby/1.9.1/rubygems/installer.rb:533:in
+ `rescue in block in build_extensions': ERROR: Failed to build gem native extension.
+(Gem::Installer::ExtensionBuildError)
+/Users/dstutzman/.rvm/rubies/ruby-1.9.2-p180/bin/ruby extconf.rb creating Makefile
+
+...(snip)...
+ferret.c: In function 'frt_term_to_s':
+ferret.c:297: error: 'struct RString' has no member named 'len'
+ferret.c:297: error: 'struct RString' has no member named 'len'
+make: *** [ferret.o] Error 1
+...(snip)...</pre>
+<p>Someone took the trouble to fix this in <a href="http://pennysmalls.com/2009/03/24/ferret-on-ruby-191/">a blog post</a>.  Their solution boils down to using <code>gem 'sdsykes-ferret'</code> in your Gemfile instead of <code>gem 'ferret'</code>.  You'll probably want to put this inside a platform-specific bundler group.</p>

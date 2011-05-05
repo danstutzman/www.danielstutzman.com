@@ -1,0 +1,302 @@
+/*
+Theme Name: Daniel Stutzman's theme
+Theme URI: http://www.danielstutzman.com/
+Description: A search engine optimized website framework for WordPress.
+Author: Daniel Stutzman
+Author URI: http://www.danielstutzman.com/
+Version: 1.0
+Tags: Comma-separated tags that describe your theme
+*/
+
+@import url('styles/reset.css');
+@import url('styles/rebuild.css');
+@import url('styles/2c-r.css');
+@import url('styles/wp.css');
+
+body {
+  font: 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans",
+    Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif;
+}
+
+@font-face {
+  font-family: GraublauWebBold;
+  src: url('GraublauSansWeb/GraublauWebBold.otf') format("opentype");
+}
+
+a {
+  text-decoration: none;
+  color: gray;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+#blog-title {
+  font-size: 40pt;
+  font-family: GraublauWebBold;
+  float: left;
+  margin: 10px 0 10px 0px;
+}
+#blog-title a {
+  text-decoration: none;
+  color: white;
+}
+#blog-description {
+  font-size: 12pt;
+  clear: none;
+  float: right;
+  width: 180px;
+  margin: 20px 0 0 0;
+}
+#access {
+  clear: both;
+  background-color: #444;
+}
+#masthead {
+  background-color: #aaa;
+  background: -webkit-gradient(linear,
+    left top, left bottom, from(#444), to(#888));
+  background: -moz-linear-gradient(top, #444, #888);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#888888');
+  color: white;
+}
+h2 {
+  margin: 1.3em 0 0.3em 0;
+  font-size: 24pt;
+  line-height: 100%;
+  font-family: GraublauWebBold;
+}
+.widget-title {
+  font-size: 24pt;
+  line-height: 90%;
+  font-family: GraublauWebBold;
+  margin: 0.7em 0 0.3em 0;
+}
+h2 a {
+  color: black;
+  text-decoration: none;
+}
+.widget-title a {
+  color: black;
+  text-decoration: none;
+}
+div.menu {
+  /*display: none;*/
+}
+#branding {
+  width: 720px;
+  margin: 0 auto;
+}
+#main {
+  width: 720px;
+  margin: 0 auto;
+}
+
+.entry-utility {
+  /*display: none;*/
+}
+h1.entry-title {
+  font-size: 24pt;
+  line-height: 90%;
+  font-family: GraublauWebBold;
+  margin: 0.7em 0 0.3em 0;
+}
+.nav-previous {
+  float: left;
+  width: 200px;
+  font-size: 10pt;
+}
+.nav-previous a {
+  color: gray;
+}
+.nav-next {
+  float:right;
+  width: 200px;
+  text-align: right;
+  font-size: 10pt;
+}
+.nav-next a {
+  color: gray;
+}
+#respond {
+  /*display: none;*/
+}
+#searchform div label {
+  display:none;
+}
+.entry-content p {
+  text-align: justify;
+}
+
+.more-link {
+  color: gray;
+  float: right;
+  margin: 10px 0 10px 0;
+}
+.more-link:after {
+  content: ' ';
+  display: block;
+  height: 20px;
+  clear: both;
+}
+
+hr {
+  
+}
+
+/* Menu */
+#access {
+  margin: 0;
+  overflow: auto;
+}
+.skip-link {
+  display: none;
+}
+.menu ul {
+  list-style: none;
+  width: 720px;
+  margin: 0 auto;
+}
+.menu ul ul {
+  display: none;
+}
+.menu li {
+  display: inline;
+}
+.menu a {
+  display: block;
+  float: left;
+}
+pre {
+  overflow: auto;
+}
+li.page_item {
+  display: inline;
+  float: left;
+  position: relative;
+  margin: 2px 50px 2px 0;
+}
+li.page_item a {
+  color: white;
+  font-weight: bold;
+}
+
+li.widget {
+  list-style-type: none;
+}
+
+/* Content */
+.post {
+  /*margin: 0 0 3em 0;*/
+  margin: 1em 0 2em 0;      
+}
+.entry-content, .entry-summary {
+  margin: 1.5em 0 0 0;
+}
+
+/* Navigation */
+.navigation {
+  margin: 0 0 1.5em 0;
+  overflow: auto; 
+}
+
+
+/* Widget Areas */
+.widget-area ul {
+  list-style: none;
+  margin-left: 0;
+}
+.widget-area ul ul {
+  list-style: disc;
+  margin-left: 1.1em;
+}
+.widget-area ul ul ul {
+  margin-left: 2.5em;
+}
+.widget-container {
+  margin: 0 0 1.5em 0;
+}
+
+#resume {
+  margin-top: 30px;
+}
+#resume tr th {
+  vertical-align: top;
+  font-weight: normal;
+  font-size: 12pt;
+  text-align: right;
+  padding: 0;
+  padding-right: 50px;
+  width: 100px;
+}
+#resume tr td {
+  font-size: 12pt;
+  padding-bottom: 30px;
+}
+#resume tr td h3 {
+  font-size: 12pt;
+  margin: 0 0 5px 0;
+}
+#resume tr td ul {
+  margin: 0px;
+  margin-bottom: 20px;
+  padding: 0px;
+  padding-left: 18px;
+}
+#resume tr td ul li {
+  margin: 0px;
+}
+
+#resume-tools {
+  width: 500px;
+}
+#resume-tools tr th {
+  text-align: left;
+  padding-right: 20px;
+  width: 150px;
+}
+#resume-tools tr td {
+  font-size: 12pt;
+  padding-bottom: 10px;
+}
+#resume tr td h1 {
+  font-size: 30pt;
+  font-family: GraublauWebBold;
+  margin: 0;
+  padding: 0;
+}
+
+#big-icon {
+  float: left;
+  margin: 0 20px 20px 0;
+}
+#big-iphone {
+  float: right;
+  margin: 5px 15px 10px 30px;
+}
+#big-photo {
+  margin-left:50px;
+  margin-bottom:50px;
+  float:right;
+}
+h2.iphone-apps {
+  clear: none;
+  text-align: center;
+  font-size: 30pt;
+  margin: 0 0 15px 0;
+}
+.iphone-app {
+  clear: both;
+  margin: 50px 0;
+  font-size: 12pt;
+  text-align: justify;
+  line-height: 150%;
+}
+
+h1#experience-h1 {
+  font-size: 30pt;
+  font-family: GraublauWebBold;
+  margin: 10px 0 10px 0;
+  padding: 0;
+  text-align: center;
+}

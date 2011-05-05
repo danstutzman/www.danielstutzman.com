@@ -1,0 +1,460 @@
+---
+layout: page
+extension: html
+title: Experience
+---
+  <style> 
+    th { text-align: left; padding-left: 8px; }
+    th.Tags { display: none; }
+    td.Tags { display: none; }
+    td { padding: 0 8px; }
+    td.From, td.Dash, td.To, th.From, th.Dash, th.To { padding: 0; }
+    body {
+      font: 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans",
+        Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif;
+    }
+    #filters-div {
+      background-color: #ccc;
+      margin-bottom: 20px;
+      box-shadow: 1px 1px 5px #888;
+      -moz-box-shadow: 1px 1px 5px #888;
+      -webkit-box-shadow: 1px 1px 5px #888;
+      padding: 10px;
+      border: 1px black solid;
+      height: 12em; /* for IE7 */
+    }
+    td, th {
+      vertical-align: top;
+      padding: 0 10px 10px 10px;
+    }
+    .filter-vertical {
+      float: left;
+      width: 170px;
+      height: 12em;
+    }
+    .Employer {
+      width: 140px;
+    }
+  </style> 
+ 
+<script> 
+/*
+  Developed by Robert Nyman, http://www.robertnyman.com
+  Code/licensing: http://code.google.com/p/getelementsbyclassname/
+*/
+var getElementsByClassName = function (className, tag, elm){
+  if (document.getElementsByClassName) {
+    getElementsByClassName = function (className, tag, elm) {
+      elm = elm || document;
+      var elements = elm.getElementsByClassName(className),
+        nodeName = (tag)? new RegExp("\\b" + tag + "\\b", "i") : null,
+        returnElements = [],
+        current;
+      for(var i=0, il=elements.length; i<il; i+=1){
+        current = elements[i];
+        if(!nodeName || nodeName.test(current.nodeName)) {
+          returnElements.push(current);
+        }
+      }
+      return returnElements;
+    };
+  }
+  else if (document.evaluate) {
+    getElementsByClassName = function (className, tag, elm) {
+      tag = tag || "*";
+      elm = elm || document;
+      var classes = className.split(" "),
+        classesToCheck = "",
+        xhtmlNamespace = "http://www.w3.org/1999/xhtml",
+        namespaceResolver = (document.documentElement.namespaceURI === xhtmlNamespace)? xhtmlNamespace : null,
+        returnElements = [],
+        elements,
+        node;
+      for(var j=0, jl=classes.length; j<jl; j+=1){
+        classesToCheck += "[contains(concat(' ', @class, ' '), ' " + classes[j] + " ')]";
+      }
+      try  {
+        elements = document.evaluate(".//" + tag + classesToCheck, elm, namespaceResolver, 0, null);
+      }
+      catch (e) {
+        elements = document.evaluate(".//" + tag + classesToCheck, elm, null, 0, null);
+      }
+      while ((node = elements.iterateNext())) {
+        returnElements.push(node);
+      }
+      return returnElements;
+    };
+  }
+  else {
+    getElementsByClassName = function (className, tag, elm) {
+      tag = tag || "*";
+      elm = elm || document;
+      var classes = className.split(" "),
+        classesToCheck = [],
+        elements = (tag === "*" && elm.all)? elm.all : elm.getElementsByTagName(tag),
+        current,
+        returnElements = [],
+        match;
+      for(var k=0, kl=classes.length; k<kl; k+=1){
+        classesToCheck.push(new RegExp("(^|\\s)" + classes[k] + "(\\s|$)"));
+      }
+      for(var l=0, ll=elements.length; l<ll; l+=1){
+        current = elements[l];
+        match = false;
+        for(var m=0, ml=classesToCheck.length; m<ml; m+=1){
+          match = classesToCheck[m].test(current.className);
+          if (!match) {
+            break;
+          }
+        }
+        if (match) {
+          returnElements.push(current);
+        }
+      }
+      return returnElements;
+    };
+  }
+  return getElementsByClassName(className, tag, elm);
+};
+ 
+function filter(filterText) {
+  var allProjects = document.getElementById('all-projects'),
+    i, len = allProjects.children[0].children.length,
+    project, languages, containsFilterText, skipHeaderRow = 1;
+  filterText = ', ' + filterText.toLowerCase() + ',';
+  for (i = skipHeaderRow; i < len; i++) {
+    project = allProjects.children[0].children[i];
+    languages = (project.children.length > 5) ?
+      project.children[5].innerHTML : "";
+    containsFilterText = (languages.toLowerCase().indexOf(filterText) != -1);
+    // use blank instead of 'table-row' to accomodate IE7
+    project.style.display = (containsFilterText) ? '' : 'none';
+  }
+  return false;
+}
+ 
+function makeFilterHandler(filterText) {
+  return function() {
+    filter(filterText);
+  };
+}
+ 
+function addClick(target, callback) {
+  if (target.addEventListener) {
+    target.addEventListener('click', callback, true);
+  }
+  else { // for IE
+    target.attachEvent('onclick', callback);
+  }
+}
+ 
+function addHandlersToFilters() {
+  var lists = getElementsByClassName('filter-list'),
+    i, len, len2, list, liTag, filterText;
+  for (i = 0, len = lists.length; i < len; i++) {
+    list = lists[i];
+    for (j = 0, len2 = list.children.length; j < len2; j++) {
+      liTag = list.children[j];
+      filterText = liTag.innerHTML;
+      filterText = filterText.replace(/\s+$/, ''); // for IE7
+      addClick(liTag, makeFilterHandler(filterText));
+      liTag.style.cursor = 'pointer';
+      liTag.style.textDecoration = 'underline';
+    }
+  }
+}
+ 
+function addLoadEvent(func) {
+  var oldonload = window.onload;
+  if (typeof window.onload != 'function') {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      if (oldonload) {
+        oldonload();
+      }
+      func();
+    }
+  }
+}
+ 
+addLoadEvent(addHandlersToFilters);
+ 
+</script> 
+ 
+<h1 id='experience-h1'>Experience</h1> 
+ 
+<div id='filters-div'> 
+  <div class='filter-vertical'> 
+    Compiled languages
+    <ul class='filter-list'> 
+      <li>C</li> 
+      <li>C#</li> 
+      <li>Java</li> 
+      <li>Objective C</li> 
+      <li>OCaml</li> 
+      <li>PL/pgSQL</li> 
+      <li>PL/SQL</li> 
+      <li>x86 Assembly</li> 
+    </ul> 
+  </div> 
+  <div class='filter-vertical'> 
+    Interpreted languages
+    <ul class='filter-list'> 
+      <li>Bash</li> 
+      <li>JavaScript</li> 
+      <li>Objective C</li> 
+      <li>Perl</li> 
+      <li>PHP</li> 
+      <li>Python</li> 
+      <li>Ruby</li> 
+      <li>VBA</li> 
+    </ul> 
+  </div> 
+  <div class='filter-vertical'> 
+    Web technologies
+    <ul class='filter-list'> 
+      <li>CSS</li> 
+      <li>GWT</li> 
+      <li>HTML</li> 
+      <li>JSP</li> 
+      <li>Ruby on Rails</li> 
+      <li>SVG</li> 
+      <li>Tomcat</li> 
+    </ul> 
+  </div> 
+  <div class='filter-vertical'> 
+    Databases
+    <ul class='filter-list'> 
+      <li>MongoDB</li> 
+      <li>MS Access</li> 
+      <li>MySQL</li> 
+      <li>Oracle</li> 
+      <li>PostgreSQL</li> 
+      <li>SQL Server</li> 
+      <li>SQLite</li> 
+    </ul> 
+  </div> 
+  <br style='clear:both'/> 
+</div> 
+ 
+<!-- Ant J2EE Lucene Scrum Swing PayPal API Hadoop Eclipse Subversion Git --> 
+<!-- Cruise Control make XCode vim --> 
+ 
+<table id='all-projects'> 
+  <tr> 
+    <th class='From'>Date</th> 
+    <th class='Dash'></th> 
+    <th class='To'></th> 
+    <th class='Employer'>Employer</th> 
+    <th class='Description'>Description</th> 
+    <th class='Tags'>Tags</th> 
+  </tr> 
+  <tr> 
+    <td class='From'>2011</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>SparkRelief</td> 
+    <td class='Description'>Wrote HTML and CSS corresponding to Photoshop designs</td> 
+    <td class='Tags'>, HTML, CSS,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2011</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>personal project</td> 
+    <td class='Description'>Created iPhone app to edit a music score</td> 
+    <td class='Tags'>, Objective C,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2011</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>personal project</td> 
+    <td class='Description'>Created iPhone app to compare supermarket prices</td> 
+    <td class='Tags'>, Objective C,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2008</td> 
+    <td class='Dash'>-</td> 
+    <td class='To'>11</td> 
+    <td class='Employer'>Rosetta Stone</td> 
+    <td class='Description'>Created Rails sites to browse and label aggregated product usage logs</td> 
+    <td class='Tags'>, Ruby, Ruby on Rails, MySQL, JavaScript, bash, SQLite, MongoDB, SVG, Hadoop,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2009</td> 
+    <td class='Dash'>-</td> 
+    <td class='To'>10</td> 
+    <td class='Employer'>Rosetta Stone</td> 
+    <td class='Description'>Created Rails sites to test language skills</td> 
+    <td class='Tags'>, Ruby, Ruby on Rails, MySQL, JavaScript, HTML, CSS,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2010</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>class project</td> 
+    <td class='Description'>Created OpenGL 3D animation of walking students</td> 
+    <td class='Tags'>, C,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2010</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>class project</td> 
+    <td class='Description'>Wrote new language for inductive predicates for static analysis project</td> 
+    <td class='Tags'>, OCaml,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2008</td> 
+    <td class='Dash'>-</td> 
+    <td class='To'>09</td> 
+    <td class='Employer'>Rosetta Stone</td> 
+    <td class='Description'>Created Rails site to browse content and edit dictionaries</td> 
+    <td class='Tags'>, Ruby, Ruby on Rails, MySQL, Java, ant, bash, JavaScript, HTML, CSS,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2007</td> 
+    <td class='Dash'>-</td> 
+    <td class='To'>09</td> 
+    <td class='Employer'>Rosetta Stone</td> 
+    <td class='Description'>Created Java applet and Rails site to record audio</td> 
+    <td class='Tags'>, Java, Swing, Ruby, Ruby on Rails, MySQL, PayPal API, HTML,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2009</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>class project</td> 
+    <td class='Description'>Created search engine over Japanese partial sentences</td> 
+    <td class='Tags'>, Java, Lucene, HTML,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2009</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>class project</td> 
+    <td class='Description'>Created x86 compiler for subset of Python including exceptions</td> 
+    <td class='Tags'>, Python, x86 Assembly,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2009</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>personal project</td> 
+    <td class='Description'>Visualized acoustic model probabilities from Sphinx speech recognizer</td> 
+    <td class='Tags'>, Java, Swing,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2008</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>class project</td> 
+    <td class='Description'>Classified motion by machine learning on accelerometer data</td> 
+    <td class='Tags'>, bash,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2008</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>personal project</td> 
+    <td class='Description'>Prototyped calendar reminder popups</td> 
+    <td class='Tags'>, C#, PHP, MySQL,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2008</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>class project</td> 
+    <td class='Description'>Created machine translation using synchronized syntax tree transfer rules</td> 
+    <td class='Tags'>, Ruby, Ruby on Rails, JavaScript, HTML,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2006</td> 
+    <td class='Dash'>-</td> 
+    <td class='To'>07</td> 
+    <td class='Employer'>Rosetta Stone</td> 
+    <td class='Description'>Helped team to build content management application</td> 
+    <td class='Tags'>, Java, Swing, PostgreSQL, PL/pgSQL, GWT, Scrum, Ant, Tomcat,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2005</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>Rosetta Stone</td> 
+    <td class='Description'>Created Rails e-commerce site that synchronizes with Oracle ERP</td> 
+    <td class='Tags'>, Ruby, Ruby on Rails, Oracle, PL/SQL, MySQL, Scrum,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2005</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>Rosetta Stone</td> 
+    <td class='Description'>Maintained login/authentication server</td> 
+    <td class='Tags'>, Java, MySQL, Tomcat,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2004</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>Rosetta Stone</td> 
+    <td class='Description'>Maintained customizations to parcel shipping software</td> 
+    <td class='Tags'>, VBA, Oracle,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2004</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>Rosetta Stone</td> 
+    <td class='Description'>Adapted Oracle iStore web app to become the point of sale solution</td> 
+    <td class='Tags'>, Java, JSP, Oracle, PL/SQL, JavaScript, HTML,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2002</td> 
+    <td class='Dash'>-</td> 
+    <td class='To'>03</td> 
+    <td class='Employer'>VistaShare</td> 
+    <td class='Description'>Maintained MS Access/VBA application to track insurance policies</td> 
+    <td class='Tags'>, VBA, MS Access, SQL Server,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>2003</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>Eastern Mennonite University</td> 
+    <td class='Description'>Created web interface for creating web surveys</td> 
+    <td class='Tags'>, PHP, MySQL, HTML,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>1999</td> 
+    <td class='Dash'>-</td> 
+    <td class='To'>2000</td> 
+    <td class='Employer'>Landis Homes Retirement Community</td> 
+    <td class='Description'>Provided IT support and user training for MS Windows network</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>1999</td> 
+    <td class='Dash'>-</td> 
+    <td class='To'>2000</td> 
+    <td class='Employer'>Landis Homes Retirement Community</td> 
+    <td class='Description'>Created MS Access app to track phone system data</td> 
+    <td class='Tags'>, VBA, MS Access,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>1998</td> 
+    <td class='Dash'></td> 
+    <td class='To'></td> 
+    <td class='Employer'>Lancaster Mennonite Historical Society</td> 
+    <td class='Description'>Prototyped web pages</td> 
+    <td class='Tags'>, Perl, HTML,</td> 
+  </tr> 
+  <tr> 
+    <td class='From'>1996</td> 
+    <td class='Dash'>-</td> 
+    <td class='To'>97</td> 
+    <td class='Employer'>class project</td> 
+    <td class='Description'>Published high school newspaper on the web</td> 
+    <td class='Tags'>, Perl, HTML</td> 
+  </tr> 
+</table> 

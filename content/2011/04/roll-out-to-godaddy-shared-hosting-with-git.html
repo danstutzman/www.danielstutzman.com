@@ -1,0 +1,11 @@
+---
+layout: post
+title: How to roll out to GoDaddy shared hosting with Git
+date: 2011-04-05
+---
+<p>Git can serve as a convenient way to deploy web sites.  Following instructions in <a href="http://www.krizka.net/2010/12/30/setting-up-a-public-git-repository-with-godaddy-shared-hosting/">this blog post</a>, I used GoDaddy's ssh access to setup Git.  (Note that it's wise to compile your own binaries instead of trusting the pre-compiled binaries the author provides).  Afterwards I cloned the bare git repository to a working tree under the ~/html directory.  I also switched to a branch to avoid the problem of rolling out to master when the current branch is already master.  Since I didn't want to expose the contents of the <code>.git</code> directory publicly, I also ran <code>echo 'deny from all' > .git/.htaccess</code> .</p>
+<p>My rollout script now looks like this (sensitive information has been X'd out):</p>
+<pre>#!/bin/bash -x
+git push godaddy master
+ssh X@X.com "cd html/X; git merge master; ls -l"</pre>
+<p>The script takes about 6 seconds to execute; not bad.</p>

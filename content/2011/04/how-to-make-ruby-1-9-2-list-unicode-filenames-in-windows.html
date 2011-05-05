@@ -1,0 +1,10 @@
+---
+layout: post
+title: How to make Ruby 1.9.2 list Unicode filenames in Windows
+date: 2011-04-09
+---
+<p>Running the following Ruby code on Windows appears to convert non-ANSI characters in filenames into question marks, even on Ruby 1.9.2 where the problem was supposed to be fixed:</p>
+<pre>p Dir.entries('.')</pre>
+<p>Apparently there's a currently undocumented parameter added to <code>Dir.entries</code> in Ruby 1.9.2 that you can pass in to fix this:</p>
+<pre>p Dir.entries('.', :encoding =&gt; 'UTF-8')</pre>
+<p>Thanks to <a href="http://stackoverflow.com/questions/2703283/unicode-filenames-on-windows-in-ruby">gmags on Stack Overflow</a> for this tip.</p>

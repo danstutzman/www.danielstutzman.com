@@ -1,0 +1,33 @@
+---
+layout: post
+title: How to deploy to Heroku for the first time
+date: 2011-02-23
+---
+<p>Heroku is a great way to host your Ruby on Rails web app for free.  The following steps walk you through the process of signing up for an account, creating a Rails app, and deploying to Heroku.  I'll assume you're starting with a vanilla Ubuntu 10.04 install; if not, you can skip any steps you've already done.</p>
+<ul>
+  <li>sudo apt-get update</li>
+  <li>sudo apt-get install ruby1.8-dev rubygems libopenssl-ruby rails git-core</li>
+  <li>ssh-keygen -t rsa # keep hitting Enter to accept the defaults</li>
+  <li>sudo gem install heroku</li>
+  <li>add to ~/.bashrc:
+    <pre>export PATH=$PATH:/var/lib/gems/1.8/bin</pre>
+  </li>
+  <li>. ~/.bashrc # load the new PATH</li>
+  <li>rails myrailsapp</li>
+  <li>cd myrailsapp</li>
+  <li>git init</li>
+  <li>git add .</li>
+  <li>git commit -m "my new app"</li>
+  <li>Sign up for heroku account at <a href="https://api.heroku.com/signup">https://api.heroku.com/signup</a>, get email, click on link in email</li>
+  <li>heroku create myrailsapp637 # change the name as needed</li>
+  <li>heroku keys:add ~/.ssh/id_rsa.pub</li>
+  <li>git push heroku master</li>
+  <li>vi public/index.html, add some new text before the &lt;/body&gt; tag</li>
+</ul>
+<p>The Rails app should now be available at myrailsapp637.heroku.com or wherever you deployed it.  For future deployments you can repeat the following steps:</p>
+<ul>
+  <li>Make changes to files as needed; for example, add some text directly before the &lt;/body&gt; tag to public/index.html</li>
+  <li>git commit -a # comment about the change</li>
+  <li>git push heroku master</li>
+  <li>Changes should now be visible at myrailsapp637.heroku.com or wherever you deployed to</li>
+</ul>

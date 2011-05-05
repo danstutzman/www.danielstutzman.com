@@ -1,0 +1,35 @@
+---
+layout: post
+title: How to write Unicode filenames in Ruby 1.8.6 on Windows
+date: 2011-04-03
+---
+<p>According to <a href="http://stackoverflow.com/questions/2703283/unicode-filenames-on-windows-in-ruby">a helpful answer on Stack Overflow</a>, Ruby 1.8.6 in Windows only uses the ANSI versions of filesystem functions.  These means that you're limited to a small subset of Unicode for file and directory names.</p>
+<p>For example, the following code successfully creates a file named こんにちは世界 on the Mac but incorrectly creates a file named with the nonsense characters ã“ã‚“ã«ã¡ã¯ä¸–ç•Œ on Windows:</p>
+<pre># The string below is a translation of "hello world" to Japanese
+filename_utf8 = "\xE3\x81\x93\xE3\x82\x93\xE3\x81\xAB\xE3\x81\xA1\xE3\x81\xAF\xE4\xB8\x96\xE7\x95\x8C"
+File.open(filename_utf8, 'w') { |file|
+  file.write("test\n")
+}</pre>
+<p>This is apparently fixed in Ruby 1.9.2, but what if you need to use Ruby 1.8.6?  Apparently the only solution is to call the Win32 functions directly:</p>
+<pre>require 'Win32API'
+require 'iconv'
+
+GENERIC_READ = 0x80000000
+GENERIC_WRITE = 0x40000000
+OPEN_EXISTING = 0x00000003
+FILE_FLAG_OVERLAPPED = 0x40000000
+NULL = 0x00000000
+CREATE_NEW = 0x00000001
+
+# The string below is a translation of "hello world" to Japanese
+filename_utf8 = "\xE3\x81\x93\xE3\x82\x93\xE3\x81\xAB\xE3\x81\xA1\xE3\x81\xAF\xE4\xB8\x96\xE7\x95\x8C"
+filename_ucs2le = Iconv.new('UCS-2LE', 'UTF-8').iconv(filename_utf8)
+filename_ucs2le_nul_terminated = "#{filename_ucs2le}\0\0"
+
+CreateFileW = Win32API.new("Kernel32", "CreateFileW", "PLLLLLL", "L")
+GetLastError = Win32API.new("Kernel32","GetLastError", "V", "N")
+puts "Result from CreateFileW is "
+puts CreateFileW.Call(filename_ucs2le_nul_terminated,  GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_NEW, 0, NULL)
+puts "Result from GetLastError is "
+puts GetLastError.Call
+puts "See http://msdn.microsoft.com/en-us/library/ms681381(v=vs.85).aspx to look up error codes"</pre>

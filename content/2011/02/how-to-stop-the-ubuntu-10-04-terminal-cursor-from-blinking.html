@@ -1,0 +1,7 @@
+---
+layout: post
+title: How to stop the Ubuntu 10.04 terminal cursor from blinking
+date: 2011-02-23
+---
+<p>Thanks to <a href="http://www.jurta.org/en/prog/noblink">http://www.jurta.org/en/prog/noblink</a>, the answer is:</p>
+<pre>gconftool-2 -s /apps/gnome-terminal/profiles/Default/cursor_blink_mode -t string off</pre>

@@ -1,0 +1,23 @@
+---
+extension: xml
+layout: nil
+filter: haml
+---
+- posts = @pages.find(:all, :in_directory => '2011', :recursive => true, :sort_by => 'date', :reverse => true, :limit => 6)
+
+!!! XML
+%feed(xmlns='http://www.w3.org/2005/Atom')
+  %title Daniel Stutzman
+  %subtitle
+    Going Diagonal: A Boulder web developer shares tech reviews and how-tos
+  %link http://www.danielstutzman.com/
+  %language en-us 
+  %updated= posts.first.date
+  %author
+    %name Daniel Stutzman
+    %email daniel@diagonalsoftware.com
+  - for post in posts
+    %entry 
+      %title= post.title 
+      %link= "http://www.danielstutzman.com#{post.url}"
+      %updated= post.date

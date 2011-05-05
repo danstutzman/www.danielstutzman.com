@@ -1,0 +1,7 @@
+---
+layout: post
+title: Prevent iPhone's automatic hyperlinking of numbers
+date: 2011-03-04
+---
+<p>If you browse to your web site with Safari on iOS, you might notice that numbers with dashes (for example, 2003-2004) can incorrectly become hyperlinks (for example, <a href="2003-2004">2003-2004</a>).  According to <a href="http://developer.apple.com/library/ios/#featuredarticles/iPhoneURLScheme_Reference/Articles/PhoneLinks.html">the relevant page in Apple's documentation</a>, you can disable this behavior by adding the following meta tag:</p>
+<pre>&lt;meta name = "format-detection" content = "telephone=no"&gt;</pre>

@@ -1,0 +1,21 @@
+---
+layout: post
+title: When PHP's mail() returns false
+date: 2011-03-05
+---
+<p>I was recently diagnosing why someone's contact form email script stopped emailing them.  The mail() function was returning false <a href="http://php.net/manual/en/function.mail.php">as documented in PHP's manual</a>, but why?  In order to see the conversation with the SMTP server, I had to do the following steps:</p>
+<ul>
+  <li>Download PHPMailer for PHP5/6 from <a href="http://phpmailer.worxware.com">phpmailer.worxware.com</a> and extract it locally</li>
+  <li>Fill in the relevant email addresses and servers in examples/test_smtp_basic_no_auth.php</li>
+  <li>Upload class.phpmailer.php, class.smtp.php, and examples/test_smtp_basic_no_auth.php to the remote server</li>
+  <li>Test examples/test_smtp_basic_no_auth.php</li>
+</ul>
+<p>The resulting debug output looked something like this (replacing customer information with X's):</p>
+<pre>SMTP -&gt; FROM SERVER:X ESMTP Exim 4.69 #1 Sat, 05 Mar 2011 13:06:43 -0700 220-We do not authorize the use of this system to transport unsolicited, 220 and/or bulk e-mail.
+SMTP -&gt; FROM SERVER: X Hello X [X.X.X.X] 250-SIZE 52428800 250-PIPELINING 250-AUTH PLAIN LOGIN 250-STARTTLS 250 HELP
+SMTP -&gt; FROM SERVER:250 OK
+SMTP -&gt; FROM SERVER:550-Verification failed for 550-No Such User Here 550 Sender verify failed
+SMTP -&gt; ERROR: RCPT not accepted from server: 550-Verification failed for 550-No Such User Here 550 Sender verify failed
+SMTP Error: The following recipients failed: X@X.com Mailer Error: SMTP Error: The following recipients failed: X@X.com
+SMTP server error: Verification failed for 550-No Such User Here 550 Sender verify failed</pre>
+<p>This is a lot more helpful than just returning false.</p>

@@ -1,0 +1,13 @@
+---
+layout: post
+title: How to develop for iPod Touch 2G with Xcode 4
+date: 2011-05-02
+---
+<p>After I upgraded to Xcode 4, I got the following message when I tried to deploy to my iPod Touch 2G:</p>
+<pre>Xcode cannot run using the selected device.
+No provisioned iOS devices are available.  Connect an
+iOS device or choose an iOS simulator as the destination.</pre>
+<p>Apparently my project had iOS 4.3 as a deployment target, but my device had iOS 4.2.1.  I tried to upgrade the device's OS with iTunes, but it clicking Check for Update gave the following message:</p>
+<pre>This version of the iPod software (4.2.1) is the current version.</pre>
+<p>Apparently 4.2.1 is the last supported version for the iPod Touch 2G (search "for highest supported operating system" on <a href="http://en.wikipedia.org/wiki/IPod_Touch">the iPod Touch wikipedia article</a>).</p>
+<p>At first I thought I needed to download the whole 4.2.1 SDK + Xcode installation, but it didn't make sense why Apple would make this necessary.  Instead it turns all I needed to do was click on Project Settings, Build Settings, and in the Deployment section set the iOS Deployment Target to iOS 4.2.</p>

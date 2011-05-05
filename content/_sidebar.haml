@@ -1,0 +1,40 @@
+---
+filter:    haml
+---
+#primary.widget-area
+#secondary.widget-area
+#secondary.widget-area(role="complementary")
+  %li#text-3.widget.widget-text
+    %h2.widgettitle About Me
+    .textwidget
+      %img(src="/images/new_picture_contrast_low.jpg" style="margin-bottom:10px")
+        Hi, I'm Daniel Stutzman, a web developer in sunny Boulder, CO.  In December 2010, I left my full-time job to do independent consulting under the name Diagonal Software LLC.
+  %li#text-4.widget.widget_text
+    %h2.widgettitle Social
+    .textwidget
+      %map(name="social_media_map")
+        %area(shape="rect" coords="0,0,50,50"
+          href="http://www.facebook.com/dtstutz"
+          title="Facebook" alt="Facebook")
+        %area(shape="rect" coords="58,0,107,50"
+          href="http://www.linkedin.com/pub/daniel-stutzman/9/15b/140"
+          title="LinkedIn" alt="LinkedIn")
+        %area(shape="rect" coords="0,60,50,110"
+          href="mailto:daniel@diagonalsoftware.com"
+          title="Email" alt="Email")
+        %area(shape="rect" coords="58,60,107,110"
+          href="/rss.xml"
+          title="RSS" alt="RSS")
+        %area(shape="rect" coords="0,118,50,168"
+          href="skype:daniel.stutzman" title="Skype")
+        %area(shape="rect" coords="58,118,107,168"
+          href="http://twitter.com/#!/danielstutzman"
+          title="Twitter" alt="Twitter")
+        %area(shape="rect" coords="0,177,50,227"
+          href="https://github.com/danielstutzman"
+          title="GitHub" alt="GitHub")
+        %area(shape="rect" coords="58,177,107,227"
+          href="http://itunes.apple.com/us/artist/diagonal-software/id412489904"
+          title="Apple" alt="Apple")
+      %img(src='/images/social_media_icons.jpg'
+        width='107' height='227' usemap="#social_media_map")

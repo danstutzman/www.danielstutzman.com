@@ -1,0 +1,10 @@
+---
+layout: post
+title: dot vimrc for HAML syntax coloring
+date: 2011-02-21
+---
+<p>Vim under Ubuntu Hardy apparently doesn't come preinstalled with syntax coloring for .haml files.  To add this, follow <a href="http://stackoverflow.com/questions/1639606/how-do-i-install-a-plugin-for-vim">stack overflow</a>'s instructions.  If it still doesn't work, try adding an extra "filetype off" line as follows:</p>
+<pre>set runtimepath+=~/.vim/vim-haml
+filetype off
+filetype plugin indent on
+syntax on</pre>

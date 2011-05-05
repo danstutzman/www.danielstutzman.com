@@ -1,0 +1,31 @@
+---
+extension: html
+filter:    haml
+---
+!!!
+%html
+  %head
+    %title= @page.title
+    %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+    %link{ :rel => 'stylesheet', :type => 'text/css',
+      :href => "/css/style.css?#{File.mtime('content/css/style.css').to_i}" }
+    :javascript
+      // Google Analytics for WordPress by Yoast v4.0.13 | http://yoast.com/wordpress/google-analytics/
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount','UA-21566912-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    %link(rel='stylesheet' id='admin-bar-css'  href='http://www.danielstutzman.com/wp-includes/css/admin-bar.css?ver=20110325' type='text/css' media='all')
+    %script{ :type => 'text/javascript',
+      :src => "/js/l10n.js?#{File.mtime('content/js/l10n.js').to_i}" }
+  %body
+    = render(:partial => '/header')
+    #main
+      = @content
+    #footer
+      #colophon
+        #site-info

@@ -1,0 +1,90 @@
+---
+layout: post
+title: How to install Drupal on Ubuntu 10.04
+date: 2011-03-02
+---
+<p>Debian packages make installing software pretty easy, but you still have to know which packages to install, and there is still some configuration to do relating to users and permissions.  I've modified the instructions from <a href="http://mazesolutions.me/linuxunix/installing-lamp-on-ubuntu-710-linuxapachemysqlphp/100">another blog post</a> so that you can install Drupal, starting from a vanilla Ubuntu 10.04 VM:</p>
+<ul>
+  <li>First fix an apt-get warning message:
+    <ul>
+      <li>sudo apt-get update</li>
+      <li>sudo apt-get install debian-archive-keyring</li>
+      <li>sudo apt-get update</li>
+    </ul>
+  </li>
+  <li>Install the Debian packages:
+    <ul>
+      <li>sudo apt-get install apache2 php5 libapache2-mod-php5 mysql-server php5-mysql php5-gd</li>
+      <li>(type in the desired mysql root password when prompted)</li>
+      <li>sudo /etc/init.d/apache2 restart</li>
+    </ul>
+  </li>
+  <li>Create a mysql database and user for Drupal:
+    <ul>
+      <li>mysql -uroot -p</li>
+      <li>(enter your mysql password)</li>
+      <li>create database drupal;</li>
+      <li>grant all on drupal.* to drupaluser@'%' identified by 'drupalpassword';</li>
+      <li>exit</li>
+    </ul>
+  </li>
+  <li>Extract the Drupal package to /var/www/drupal
+    <ul>
+      <li>Download drupal-7.0.tar.gz from <a href="http://drupal.org/">drupal.org</a></li>
+      <li>cd /var/www</li>
+    </ul>
+    <ul>
+      <li>sudo mv /home/user/Downloads/drupal-6.20.tar.gz .</li>
+      <li>sudo tar xvzf drupal-7.0.tar.gz</li>
+      <li>sudo mv drupal-7.0 drupal</li>
+    </ul>
+  </li>
+  <li>Setup permissions so drupal can install:
+    <ul>
+      <li>sudo cp drupal/sites/default/default.settings.php drupal/sites/default/settings.php</li>
+      <li>sudo mkdir drupal/sites/default/files</li>
+      <li>sudo vi fix_permissions.sh</li>
+      <li><pre>#!/bin/bash
+mkdir -p drupal/sites/defaults/files
+chown -R user:www-data drupal
+find drupal -type d -exec chmod u=rwx,g=rx,o= {} \;
+find drupal -type f -exec chmod u=rw,g=r,o= {} \;
+find drupal -type d -name files -exec chmod ug=rwx,o= '{}' \;</pre></li>
+      <li>sudo chmod +x fix_permissions.sh</li>
+      <li>sudo ./fix_permissions.sh</li>
+      <li>sudo chmod u=rw,g=rw drupal/sites/default/settings.php</li>
+    </ul>
+  </li>
+  <li>Install Drupal by browsing <a href="http://localhost/drupal-6.20">http://localhost/drupal</a>
+    <ul>
+      <li>Save and Continue (Standard)</li>
+      <li>Save and Continue (English)</li>
+      <li>Database settings:
+        <ul>
+          <li>Database name: drupal</li>
+          <li>Username: drupaluser</li>
+          <li>Password: drupalpassword</li>
+          <li>Save and Continue</li>
+        </ul>
+      </li>
+      <li>Last screen:
+        <ul>
+          <li>Fill in email address</li>
+          <li>Username: drupaladmin</li>
+          <li>Password: drupalpassword</li>
+          <li>Confirm password: drupalpassword</li>
+          <li>Fill in default country</li>
+          <li>Fill in default time zone</li>
+          <li>Save and Continue</li>
+        </ul>
+      </li>
+      <li>Click Visit your new site link</li>
+    </ul>
+  </li>
+  <li>Clean up:
+    <ul>
+      <li>sudo rm drupal-7.0.tar.gz</li>
+      <li>sudo ./fix_permissions.sh</li>
+    </ul>
+  </li>
+</ul>
