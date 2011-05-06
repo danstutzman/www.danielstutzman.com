@@ -34,7 +34,14 @@ filter:    haml
             %h2.entry-title
               %a{ :href => url_for(@page) }
                 = @page.title
-          ~ @content
+          .entry-meta
+            - if @page.date
+              %span.meta-prep.meta-prep-entry-date Published
+              %span.entry-date
+                %abbr.published
+                  = @page.date
+          .entry-content
+            ~ @content
       = render(:partial => '/sidebar')
     #footer
       #colophon

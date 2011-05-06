@@ -12,18 +12,14 @@ extension: html
     %a{ :href => url_for(last_post).gsub(/\.html$/, '') }
       = last_post.title
   .entry-meta
-    %span.meta-prep.meta-prep-author By
-    %span.author.vcard daniel
     - if last_post.date
-      %span.meta-sep
-        |
       %span.meta-prep.meta-prep-entry-date Published
       %span.entry-date
         %abbr.published
           = last_post.date
+      %br
   .entry-content
-    %p
-      ~ render(last_post)
+    ~ render(last_post)
 %h2.entry-title Archives
 %ul
   - months = posts.collect { |post| post.date.strftime('%b %Y') }.uniq
@@ -34,4 +30,4 @@ extension: html
         - posts.each do |post|
           - if post.date.strftime('%b %Y') == month
             %li
-              = link_to(post.title, post).gsub(/\.html$/, '')
+              = link_to(post.title, post).gsub(/\.html/, '')
