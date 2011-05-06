@@ -9,7 +9,7 @@ extension: html
 - last_post = posts.first
 #post-238.post-238.post.type-post.status-publish.format-standard.hentry.category-all.category-howto.category-tech
   %h2.entry-title
-    %a{ :href => url_for(last_post) }
+    %a{ :href => url_for(last_post).gsub(/\.html$/, '') }
       = last_post.title
   .entry-meta
     %span.meta-prep.meta-prep-author By
@@ -34,4 +34,4 @@ extension: html
         - posts.each do |post|
           - if post.date.strftime('%b %Y') == month
             %li
-              = link_to(post.title, post).gsub(/\/index.html/, '')
+              = link_to(post.title, post).gsub(/\.html$/, '')

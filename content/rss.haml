@@ -19,6 +19,6 @@ filter: haml
     - for post in posts
       %item 
         %title= post.title 
-        %link= "http://www.danielstutzman.com#{post.url}"
+        %link= "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}"
         %author Daniel Stutzman
         %pubDate= post.date
