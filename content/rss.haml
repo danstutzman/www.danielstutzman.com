@@ -22,3 +22,4 @@ filter: haml
         %link= "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}"
         %author Daniel Stutzman
         %pubDate= post.date
+        %description= render(post)
