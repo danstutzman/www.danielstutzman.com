@@ -10,15 +10,19 @@ filter: haml
   %title Daniel Stutzman
   %subtitle
     Going Diagonal: A Boulder web developer shares tech reviews and how-tos
-  %link http://www.danielstutzman.com/
-  %language en-us 
-  %updated= posts.first.date
+  %id http://www.danielstutzman.com/atom.xml
+  %link{ :rel => 'self', :href => 'http://www.danielstutzman.com/atom.xml',
+    :type => 'application/atom+xml' }
+  %updated= Time.now.gmtime.strftime('%Y-%m-%dT%H:%M:%SZ')
   %author
     %name Daniel Stutzman
     %email daniel@diagonalsoftware.com
   - for post in posts
     %entry 
-      %title= post.title 
-      %link= "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}"
-      %updated= post.date
-      %summary= render(post)
+      %title= post.title
+      %id= "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}"
+      %link{ :href =>                                                     |
+        "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}" }  |
+      %updated= "#{post.date}T06:00:00Z"
+      %content(type='html')
+        = render(post)
