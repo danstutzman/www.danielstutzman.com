@@ -21,6 +21,7 @@ projects_yaml = <<EOF
   Impact: 1
   Description: "Created iPhone app to edit a music score"
   Image: /images/experience/shape_notes.png
+  Caption: Screenshot of score editing screen
   Tags:
   - Objective C
 
@@ -30,6 +31,7 @@ projects_yaml = <<EOF
   Impact: 1
   Description: "Created iPhone app to compare supermarket prices"
   Image: /images/experience/per_pound.png
+  Caption: Screenshot of conversion screen
   Tags:
   - Objective C
 
@@ -68,8 +70,9 @@ projects_yaml = <<EOF
   Dash: 	
   Employer: "class project"
   Impact: 1
-  Description: "Created OpenGL 3D animation of walking students"
+  Description: "Created OpenGL 3-D animation of walking students"
   Image: /images/experience/opengl_project.png
+  Caption: Still image from 3-D animation
   Tags:
   - C
 
@@ -119,6 +122,7 @@ projects_yaml = <<EOF
   Impact: 1
   Description: "Created search engine over Japanese partial sentences"
   Image: /images/experience/search_engine.png
+  Caption: Example screenshot of top search results
   Tags:
   - Java
   - Lucene
@@ -130,6 +134,7 @@ projects_yaml = <<EOF
   Impact: 1
   Description: "Created x86 compiler for subset of Python including exceptions"
   Image: /images/experience/python_compiler.png
+  Caption: Excerpts from slide presentation explaining stack unrolling
   Tags:
   - Python
   - x86 Assembly
@@ -149,6 +154,7 @@ projects_yaml = <<EOF
   Impact: 1
   Description: "Classified motion by machine learning on accelerometer data"
   Image: /images/experience/accelerometer.png
+  Caption: Excerpt from paper demonstrating high accuracy of predictions
   Tags:
   - bash
 
@@ -158,6 +164,7 @@ projects_yaml = <<EOF
   Impact: 1
   Description: "Prototyped calendar reminder popups"
   Image: /images/experience/alarm_popup.png
+  Caption: Screenshot demonstrating alarm popup bar and popup dialog
   Tags:
   - C#
   - PHP
@@ -169,6 +176,7 @@ projects_yaml = <<EOF
   Impact: 1
   Description: "Created machine translation using synchronized syntax tree transfer rules"
   Image: /images/experience/machine_translation.png
+  Caption: Screenshot showing English translations of a given Spanish sentence.
   Tags:
   - Ruby
   - Ruby on Rails
@@ -319,13 +327,13 @@ projects.each { |project|
       when '' then next
       when 'Impact' then next
         #value = ('&#x2605;' * value.to_i) + ('&#x2606;' * (3 - value.to_i))
+      when 'Caption' then next
       when 'Tags'
         value = ([''] + (value || ['']) + ['']).join(', ')
       when 'Image'
-        if value
-          value = "<a href='#{value}' rel='lightbox'>
-            <img src='/images/lightbox_icon.gif' width='12' height='11'/></a>"
-        end
+        value = value &&
+          "<a href='#{value}' rel='lightbox' title='#{project['Caption']}'>
+          <img src='/images/lightbox_icon.gif' width='12' height='11'/></a>"
     end
     html += "    <td class='#{col_header}'>#{value}</td>\n"
   }
