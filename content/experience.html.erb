@@ -20,6 +20,7 @@ yaml = <<EOF
   Employer: "personal project"
   Impact: 1
   Description: "Created iPhone app to edit a music score"
+  Image: /images/experience/shape_notes.png
   Tags:
   - Objective C
 
@@ -28,6 +29,7 @@ yaml = <<EOF
   Employer: "personal project"
   Impact: 1
   Description: "Created iPhone app to compare supermarket prices"
+  Image: /images/experience/per_pound.png
   Tags:
   - Objective C
 
@@ -67,6 +69,7 @@ yaml = <<EOF
   Employer: "class project"
   Impact: 1
   Description: "Created OpenGL 3D animation of walking students"
+  Image: /images/experience/opengl_project.png
   Tags:
   - C
 
@@ -115,6 +118,7 @@ yaml = <<EOF
   Employer: "class project"
   Impact: 1
   Description: "Created search engine over Japanese partial sentences"
+  Image: /images/experience/search_engine.png
   Tags:
   - Java
   - Lucene
@@ -125,6 +129,7 @@ yaml = <<EOF
   Employer: "class project"
   Impact: 1
   Description: "Created x86 compiler for subset of Python including exceptions"
+  Image: /images/experience/python_compiler.png
   Tags:
   - Python
   - x86 Assembly
@@ -143,6 +148,7 @@ yaml = <<EOF
   Employer: "class project"
   Impact: 1
   Description: "Classified motion by machine learning on accelerometer data"
+  Image: /images/experience/accelerometer.png
   Tags:
   - bash
 
@@ -151,6 +157,7 @@ yaml = <<EOF
   Employer: "personal project"
   Impact: 1
   Description: "Prototyped calendar reminder popups"
+  Image: /images/experience/alarm_popup.png
   Tags:
   - C#
   - PHP
@@ -161,6 +168,7 @@ yaml = <<EOF
   Employer: "class project"
   Impact: 1
   Description: "Created machine translation using synchronized syntax tree transfer rules"
+  Image: /images/experience/machine_translation.png
   Tags:
   - Ruby
   - Ruby on Rails
@@ -287,7 +295,7 @@ yaml = <<EOF
 EOF
 
 html = ''
-col_headers = %w[From Dash To Employer Description Tags]
+col_headers = %w[From Dash To Employer Image Description Tags]
 html += "  <tr>\n"
 col_headers.each { |col_header|
   next if col_header == 'Impact'
@@ -295,6 +303,7 @@ col_headers.each { |col_header|
     when 'From' then 'Date'
     when 'Dash' then ''
     when 'To' then ''
+    when 'Image' then ''
     else col_header
   end
   html += "    <th class='#{col_header}'>#{text}</th>"
@@ -310,7 +319,13 @@ projects.each { |project|
       when '' then next
       when 'Impact' then next
         #value = ('&#x2605;' * value.to_i) + ('&#x2606;' * (3 - value.to_i))
-      when 'Tags' then value = ([''] + (value || ['']) + ['']).join(', ')
+      when 'Tags'
+        value = ([''] + (value || ['']) + ['']).join(', ')
+      when 'Image'
+        if value
+          value = "<a href='#{value}' rel='lightbox'>
+            <img src='/images/lightbox_icon.gif' width='12' height='11'/></a>"
+        end
     end
     html += "    <td class='#{col_header}'>#{value}</td>\n"
   }
@@ -324,6 +339,7 @@ table_rows = html
     td.Tags { display: none; }
     td { padding: 0 8px; }
     td.From, td.Dash, td.To, th.From, th.Dash, th.To { padding: 0; }
+    td.To { padding-right: 8px; }
     body {
       font: 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans",
         Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif;
@@ -433,6 +449,7 @@ var getElementsByClassName = function (className, tag, elm){
 };
  
 function filter(filterText) {
+  var TAGS_COLUMN = 6;
   var allProjects = document.getElementById('all-projects'),
     i, len = allProjects.children[0].children.length,
     project, languages, containsFilterText, skipHeaderRow = 1;
@@ -440,7 +457,7 @@ function filter(filterText) {
   for (i = skipHeaderRow; i < len; i++) {
     project = allProjects.children[0].children[i];
     languages = (project.children.length > 5) ?
-      project.children[5].innerHTML : "";
+      project.children[TAGS_COLUMN].innerHTML : "";
     containsFilterText = (languages.toLowerCase().indexOf(filterText) != -1);
     // use blank instead of 'table-row' to accomodate IE7
     project.style.display = (containsFilterText) ? '' : 'none';
@@ -555,7 +572,7 @@ addLoadEvent(addHandlersToFilters);
  
 <!-- Ant J2EE Lucene Scrum Swing PayPal API Hadoop Eclipse Subversion Git --> 
 <!-- Cruise Control make XCode vim --> 
- 
+
 <table id='all-projects'> 
   <%= table_rows %>
 </table> 

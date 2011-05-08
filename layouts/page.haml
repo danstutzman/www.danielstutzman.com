@@ -22,6 +22,8 @@ filter:    haml
     %link(rel='stylesheet' id='admin-bar-css'  href='http://www.danielstutzman.com/wp-includes/css/admin-bar.css?ver=20110325' type='text/css' media='all')
     %script{ :type => 'text/javascript',
       :src => "/js/l10n.js?#{File.mtime('content/js/l10n.js').to_i}" }
+    %script{ :type => 'text/javascript',
+      :src => "/js/lightbox.js?#{File.mtime('content/js/l10n.js').to_i}" }
   %body
     = render(:partial => '/header')
     #main
