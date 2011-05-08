@@ -5,7 +5,7 @@ title: Experience
 filter: erb
 ---
 <%
-yaml = <<EOF
+projects_yaml = <<EOF
 - From: 2011
   Dash: 	
   Employer: "SparkRelief"
@@ -310,7 +310,7 @@ col_headers.each { |col_header|
 }
 html += "  </tr>\n"
 
-projects = YAML::load(yaml)
+projects = YAML::load(projects_yaml)
 projects.each { |project|
   html += "  <tr>\n"
   col_headers.each { |col_header|
@@ -515,58 +515,59 @@ addLoadEvent(addHandlersToFilters);
 </script> 
  
 <h1 id='experience-h1'>Experience</h1> 
+
+<%
+tags_yaml = "
+- Compiled languages:
+  - C
+  - C#
+  - Java
+  - Objective C
+  - OCaml
+  - PL/pgSQL
+  - PL/SQL
+  - x86 Assembly
+- Interpreted languages:
+  - Bash
+  - JavaScript
+  - Objective C
+  - Perl
+  - PHP
+  - Python
+  - Ruby
+  - VBA
+- Web technologies:
+  - CSS
+  - GWT
+  - HTML
+  - JSP
+  - Ruby on Rails
+  - SVG
+  - Tomcat
+- Databases:
+  - MongoDB
+  - MS Access
+  - MySQL
+  - Oracle
+  - PostgreSQL
+  - SQL Server
+  - SQLite
+"
+grouping_maps = YAML::load(tags_yaml)
+%>
  
 <div id='filters-div'> 
-  <div class='filter-vertical'> 
-    Compiled languages
-    <ul class='filter-list'> 
-      <li>C</li> 
-      <li>C#</li> 
-      <li>Java</li> 
-      <li>Objective C</li> 
-      <li>OCaml</li> 
-      <li>PL/pgSQL</li> 
-      <li>PL/SQL</li> 
-      <li>x86 Assembly</li> 
-    </ul> 
-  </div> 
-  <div class='filter-vertical'> 
-    Interpreted languages
-    <ul class='filter-list'> 
-      <li>Bash</li> 
-      <li>JavaScript</li> 
-      <li>Objective C</li> 
-      <li>Perl</li> 
-      <li>PHP</li> 
-      <li>Python</li> 
-      <li>Ruby</li> 
-      <li>VBA</li> 
-    </ul> 
-  </div> 
-  <div class='filter-vertical'> 
-    Web technologies
-    <ul class='filter-list'> 
-      <li>CSS</li> 
-      <li>GWT</li> 
-      <li>HTML</li> 
-      <li>JSP</li> 
-      <li>Ruby on Rails</li> 
-      <li>SVG</li> 
-      <li>Tomcat</li> 
-    </ul> 
-  </div> 
-  <div class='filter-vertical'> 
-    Databases
-    <ul class='filter-list'> 
-      <li>MongoDB</li> 
-      <li>MS Access</li> 
-      <li>MySQL</li> 
-      <li>Oracle</li> 
-      <li>PostgreSQL</li> 
-      <li>SQL Server</li> 
-      <li>SQLite</li> 
-    </ul> 
-  </div> 
+  <% grouping_maps.each { |grouping_map|
+    grouping, tags = grouping_map.keys[0], grouping_map.values[0] %>
+    <div class='filter-vertical'> 
+      <%= grouping %>
+      <ul class='filter-list'> 
+        <% tags.each { |tag| %>
+          <li><%= tag %></li>
+        <% } %>
+      </ul> 
+    </div> 
+  <% } %>
   <br style='clear:both'/> 
 </div> 
  
