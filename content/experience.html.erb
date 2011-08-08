@@ -7,13 +7,28 @@ filter: erb
 <%
 projects_yaml = <<EOF
 - From: 2011
-  Dash: 	
-  Employer: "SparkRelief"
+  Dash:
+  Employer: "KIDzOUT Inc."
   Impact: 2
-  Description: "Wrote HTML and CSS corresponding to Photoshop designs"
+  Description: "Created iPhone app to find nearby kid-friendly locations (not yet released)"
+  Image: http://www.kidzout.com/
   Tags:
-  - HTML
-  - CSS
+  - PHP
+  - Objective C
+  - MySQL
+  - JavaScript
+
+- From: 2011
+  Dash:
+  Employer: "Optimal Consulting LLC"
+  Impact: 2
+  Description: "Ported stand-alone Rails app from Windows to Mac (not yet released)"
+  Tags:
+  - Ruby
+  - Ruby on Rails
+  - bash
+  - MySQL
+  - SQLite
 
 - From: 2011
   Dash: 	
@@ -198,7 +213,7 @@ projects_yaml = <<EOF
   To: "07"
   Employer: "Rosetta Stone"
   Impact: 2
-  Description: "Helped team to build content management application"
+  Description: "Served on team creating a content management application"
   Tags:
   - Java
   - Swing
@@ -341,9 +356,16 @@ projects.each { |project|
       when 'Tags'
         value = ([''] + (value || ['']) + ['']).join(', ')
       when 'Image'
-        value = value &&
-          "<a href='#{value}' rel='lightbox' title='#{project['Caption']}'>
-          <img src='/images/lightbox_icon.gif' width='12' height='11'/></a>"
+        if value.nil?
+          nil
+        elsif value.match(%r[^/images/])
+          value =
+            "<a href='#{value}' rel='lightbox' title='#{project['Caption']}'>
+            <img src='/images/lightbox_icon.gif' width='12' height='11'/></a>"
+        elsif value.match(%r[^http])
+          value = "<a href='#{value}'>
+            <img src='/images/lightbox_icon.gif' width='12' height='11'/></a>"
+        end
     end
     html += "    <td class='#{col_header}'>#{value}</td>\n"
   }
