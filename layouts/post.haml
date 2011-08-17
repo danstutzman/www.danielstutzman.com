@@ -5,7 +5,10 @@ filter:    haml
 !!!
 %html
   %head
-    %title= @page.title
+    - if @page.title && @page.title != ''
+      %title= @page.title
+    - else
+      %title Daniel Stutzman, iOS and web developer
     %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
     %link{ :rel => 'stylesheet', :type => 'text/css',
       :href => "/css/style.css?#{File.mtime('content/css/style.css').to_i}" }
