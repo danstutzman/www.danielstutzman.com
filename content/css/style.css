@@ -266,11 +266,11 @@ li.widget {
   padding: 0;
 }
 
-#big-icon {
+.big-icon {
   float: left;
   margin: 0 20px 20px 0;
 }
-#big-iphone {
+.big-iphone {
   float: right;
   margin: 5px 15px 10px 30px;
 }
