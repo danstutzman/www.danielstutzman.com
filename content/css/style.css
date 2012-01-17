@@ -174,7 +174,7 @@ li.page_item {
   display: inline;
   float: left;
   position: relative;
-  margin: 2px 50px 2px 0;
+  margin: 2px 40px 2px 0;
 }
 li.page_item a {
   color: white;
@@ -322,3 +322,28 @@ h1#experience-h1 {
 	background-image: url(/images/blank.gif);
 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/images/overlay.png", sizingMethod="scale");
 	}
+
+h1#testimonials-h1 {
+  font-size: 30pt;
+  font-family: GraublauWebBold;
+  margin: 10px 0 10px 0;
+  padding: 0;
+  text-align: center;
+}
+.quotation {
+  text-align:justify;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+.quotation-open {
+  float:left;
+  margin:0 15px 0 0;
+}
+.quotation-close {
+  float:right;
+  margin:0 0 0 15px;
+}
+.quotation-from {
+  text-align:right;
+  margin-top: 10px;
+}
