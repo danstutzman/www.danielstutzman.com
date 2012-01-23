@@ -1,0 +1,60 @@
+---
+layout: post
+title: Syntactic sugar for functional programming in Java
+date: 2012-01-23
+---
+<p>I enjoyed functional programming in Scala with <i>map</i>, <i>reduceLeft</i>,
+and <i>filter</i>, etc.  But I didn't like its slow compilation speed; on my setup, it was 15-20 seconds minimum even with the Fast Scala Compiler (FSC), dependency tracking, a warm cache, and one .scala file touched.  And it wasn't much faster on Amazon Web Services' beefiest server.  So I looked into how else I could do basic functional programming on the JVM.  There appear to be three options:</p>
+
+<ul>
+<li>Compile with another language with JVM output: anything from
+  <a href='http://jruby.org/'>JRuby</a> to
+  <a href='http://javac.info/'>BGGA</a> (a fork of Java).</li>
+<li>Use a functional library like
+  <a href='http://code.google.com/p/lambdaj/'>lambdaj</a>, adapting to
+  <a href='http://code.google.com/p/lambdaj/wiki/Closures'>its unusual
+  style</a>.</li>
+<li>Use anonymous classes extending interfaces such as Runnable.</li>
+</ul>
+
+<p>I tried making the third option more palatable by writing a Java code
+preprocessor for syntactic sugar :-)  So now I can write code like this:</p>
+
+<pre>List<Integer> positiveInts = Arrays.asList(new Integer[] { 1, 2, 3 });
+List<Integer> negativeInts = MAP_LO_LO(positiveInts, Integer, Integer, {
+  return -_;
+});
+</pre>
+
+<p>MAP_LO_LO is one of the many C preprocessor macro I created.  In this case, the _LO_LO name is because it maps from a List of objects to a List of objects.  Postfix-style naming is unfortunately necessary to support arrays and primitives like <i>int</i>, <i>float</i>, etc.  When you run the <i>cpp</i> command on the above code, it expands to something like:</p>
+
+<pre>List<Integer> positiveInts = Arrays.asList(new Integer[] { 1, 2, 3 });
+List<Integer> negativeInts = map(positiveInts, new Mapper&lt;Integer, Integer&gt;() {
+  public Integer transform(Integer _) {
+    return -_;
+  }
+});
+</pre>
+
+<p>Hopefully that single example gave you an idea of its possibilities and limitations.  I fleshed out the idea a bit and released it as the
+<a href='https://github.com/danielstutzman/BlockSyntaxInJava'>BlockSyntaxInJava project on Github</a>.  The basic advantages of my solution are:</p>
+
+<ul>
+<li>Unix users already have <i>cpp</i> installed</li>
+<li>The macro expansion isn't too complicated to debug</li>
+<li>You can ease into learning it gradually</li>
+</ul>
+
+<p>The disadvantages are:</p>
+
+<ul>
+<li>This library is alpha and abandonware</li>
+<li>Windows users will have to download a <i>cpp.exe</i></li>
+<li>Unconventional use of the C preprocessor could confuse people
+<li>Anonymous classes don't conveniently express some use cases with checked exceptions or non-local control flow, <a href='http://gafter.blogspot.com/2006/08/use-cases-for-closures.html'>as Neal Gafter points out</a>.</li>
+</ul>
+
+<p>
+Anyway, it was fun to create; maybe it will inspire you to use the C
+preprocessor for something.
+</p>
