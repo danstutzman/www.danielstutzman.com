@@ -5,7 +5,7 @@ layout: post
 filter: haml
 extension: html
 ---
-- posts = @pages.find(:all, :in_directory => '2011', :recursive    => true,  :sort_by      => 'date', :reverse      => true)
+- posts = %w[2011 2012].map { |year| @pages.find(:all, :in_directory => year, :recursive    => true,  :sort_by      => 'date') }.flatten.reverse
 - last_post = posts.first
 #post-238.post-238.post.type-post.status-publish.format-standard.hentry.category-all.category-howto.category-tech
   %h2.entry-title
