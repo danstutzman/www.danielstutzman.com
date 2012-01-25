@@ -1,0 +1,59 @@
+---
+layout: post
+title: Missing hooks/after_use_jruby_opts file
+date: 2012-01-25
+---
+<p>After joining a JRuby project that used RVM and had an <i>.rvmrc</i> file in source control, I noticed the following error message when I <i>cd</i>'d into the project directory:</i>
+
+<pre>chmod: /Users/dstutzman/.rvm/hooks/after_use_jruby_opts: No such file or directory
+</pre>
+
+<p>So what was calling the <i>chmod</i> command and why was
+  <i>~/.rvm/hooks/after_use_jruby_opts</i> missing?  It turned out that
+  the problem was coming from a manual insertion made to <i>.rvmrc</i>
+  recommended by <a href='http://stackoverflow.com/questions/8283300/how-do-i-use-jruby-opts-with-rvm'>a stackoverflow post</a> :</p>
+
+<pre>PROJECT_JRUBY_OPTS=( --1.9 )
+# The variable PROJECT_JRUBY_OPTS requires the following to be run in shell:
+chmod +x ${rvm_path}/hooks/after_use_jruby_opts
+</pre>
+
+<p>So that explains where <i>chmod</i> command came from, but why was the
+  <i>~/.rvm/hooks</i> directory present on the original developer's machine,
+  but not mine?</p>
+
+<p>The answer is that my version of RVM was older than the version the
+  original developer was using.
+  To update it, I followed
+  <a href='http://beginrescueend.com/rvm/upgrading/'>RVM's
+  upgrading instructions</a> by running <tt>rvm get latest</tt>.
+  That created a <i>~/.rvm/hooks</i> directory so the error disappeared.</p>
+
+<p>More importantly, the RVM upgrade fixed a much bigger problem:
+  that JRuby was running in Ruby 1.8 mode instead of Ruby 1.9 mode.  Setting
+  <i>PROJECT_JRUBY_OPTS</i> with the addition noted above
+  was supposed to fix this problem, but it didn't.
+  We could prove that JRuby was still running in Ruby 1.8 mode
+  because running the following command using Ruby 1.9 syntax:</p>
+
+<pre>jruby -e 'p({ a: 3 })'</pre>
+
+<p>...produced the following error:</p>
+
+<pre>SyntaxError: -e:1: syntax error, unexpected ':'</pre>
+
+<p>Fortunately, upgrading RVM got <i>PROJECT_JRUBY_OPTS</i> working again,
+   so running that same command was the same as running:
+
+<pre>jruby --1.9 -e 'p({ a: 3 })'</pre>
+
+<p>...and produced the expected output:</p>
+
+<pre>{:a=&gt;3}</pre>
+
+<p>It would be nice if the <i>PROJECT_JRUBY_OPTS</i> code snippet would
+  have tested the version of RVM and complained about it directly,
+  but I suppose the <tt>No such file or directory</tt> error was better
+  than nothing.</p>
+
+<p><b>TL;DR</b> Before sharing a customized <i>.rvmrc</i>, update RVM</p>
