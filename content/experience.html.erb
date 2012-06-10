@@ -6,12 +6,26 @@ filter: erb
 ---
 <%
 projects_yaml = <<EOF
+- From: 2012
+  Dash:
+  Employer: Quick Left client
+  Impact: 2
+  Description: "Added single sign-on via SAP logon tickets to site"
+  MoreInfo: https://github.com/danielstutzman/sso_sap
+  Tags:
+  - Apache
+  - Ruby
+  - Ruby on Rails
+  - Java
+  - bash
+  - HAML
+
 - From: 2011
   Dash:
   Employer: personal project
   Impact: 1
-  Description: "Prototyped web service using computer vision to read sheet music"
-  Image: http://www.songreader.net/
+  Description: "Prototyped computer vision algorithms to read sheet music"
+  MoreInfo: http://www.songreader.net/
   Tags:
   - Scala
   - JavaScript
@@ -23,8 +37,9 @@ projects_yaml = <<EOF
   Employer: "KIDzOUT Inc."
   Impact: 2
   Description: "Created iPhone app to find nearby kid-friendly locations"
-  Image: http://www.kidzout.com/
+  MoreInfo: http://www.kidzout.com/
   Tags:
+  - Apache
   - PHP
   - Objective C
   - MySQL
@@ -32,10 +47,10 @@ projects_yaml = <<EOF
 
 - From: 2011
   Dash:
-  Employer: "Optimal Consulting LLC"
+  Employer: "Optimal Consulting"
   Impact: 2
   Description: "Ported stand-alone Rails app from Windows to Mac"
-  Image: http://www.busydocs.com/
+  MoreInfo: http://www.busydocs.com/
   Tags:
   - Ruby
   - Ruby on Rails
@@ -48,7 +63,7 @@ projects_yaml = <<EOF
   Employer: "personal project"
   Impact: 1
   Description: "Created iPhone app to edit a music score"
-  Image: /images/experience/shape_notes.jpg
+  MoreInfo: /images/experience/shape_notes.jpg
   Caption: Screenshot of score editing screen
   Tags:
   - Objective C
@@ -58,7 +73,7 @@ projects_yaml = <<EOF
   Employer: "personal project"
   Impact: 1
   Description: "Created iPhone app to compare supermarket prices"
-  Image: /images/experience/per_pound.png
+  MoreInfo: /images/experience/per_pound.png
   Caption: Screenshot of conversion screen
   Tags:
   - Objective C
@@ -68,10 +83,11 @@ projects_yaml = <<EOF
   To: 11
   Employer: "Rosetta Stone"
   Impact: 3
-  Description: "Created Rails sites to browse and label aggregated product usage logs"
-  Image: /images/experience/logs.png
+  Description: "Created Rails sites to manage aggregate product usage logs"
+  MoreInfo: /images/experience/logs.png
   Caption: Excerpt of screenshot of one web site page
   Tags:
+  - Apache
   - Ruby
   - Ruby on Rails
   - MySQL
@@ -79,7 +95,6 @@ projects_yaml = <<EOF
   - bash
   - SQLite
   - MongoDB
-  - SVG
   - Hadoop
 
 - From: 2009
@@ -88,9 +103,10 @@ projects_yaml = <<EOF
   Employer: "Rosetta Stone"
   Impact: 2
   Description: "Created Rails sites to test language skills"
-  Image: /images/experience/test_language_skills.jpg
+  MoreInfo: /images/experience/test_language_skills.jpg
   Caption: Excerpt of screenshot of one web site page
-- Tags:
+  Tags:
+  - Apache
   - Ruby
   - Ruby on Rails
   - MySQL
@@ -103,7 +119,7 @@ projects_yaml = <<EOF
   Employer: "class project"
   Impact: 1
   Description: "Created OpenGL 3-D animation of walking students"
-  Image: /images/experience/opengl_project.jpg
+  MoreInfo: /images/experience/opengl_project.jpg
   Caption: Still image from 3-D animation
   Tags:
   - C
@@ -112,8 +128,8 @@ projects_yaml = <<EOF
   Dash: 	
   Employer: "class project"
   Impact: 2
-  Description: "Wrote new language for inductive predicates for static analysis project"
-  Image: /images/experience/ocaml.png
+  Description: "Implemented predicate language for static analysis research"
+  MoreInfo: /images/experience/ocaml.png
   Caption: Excerpt from OCaml source code
   Tags:
   - OCaml
@@ -124,9 +140,10 @@ projects_yaml = <<EOF
   Employer: "Rosetta Stone"
   Impact: 2
   Description: "Created Rails site to browse content and edit dictionaries"
-  Image: /images/experience/words.png
+  MoreInfo: /images/experience/words.png
   Caption: Excerpt of screenshot of one web site page
   Tags:
+  - Apache
   - Ruby
   - Ruby on Rails
   - MySQL
@@ -143,9 +160,10 @@ projects_yaml = <<EOF
   Employer: "Rosetta Stone"
   Impact: 3
   Description: "Created Java applet and Rails site to record audio"
-  Image: /images/experience/sound_check.png
+  MoreInfo: /images/experience/sound_check.png
   Caption: Screenshot of Java applet
   Tags:
+  - Apache
   - Java
   - Swing
   - Ruby
@@ -159,7 +177,7 @@ projects_yaml = <<EOF
   Employer: "class project"
   Impact: 1
   Description: "Created search engine over Japanese partial sentences"
-  Image: /images/experience/search_engine.png
+  MoreInfo: /images/experience/search_engine.png
   Caption: Example screenshot of top search results
   Tags:
   - Java
@@ -170,8 +188,8 @@ projects_yaml = <<EOF
   Dash: 	
   Employer: "class project"
   Impact: 1
-  Description: "Created x86 compiler for subset of Python including exceptions"
-  Image: /images/experience/python_compiler.png
+  Description: "Created limited Python to x86 compiler"
+  MoreInfo: /images/experience/python_compiler.png
   Caption: Excerpts from slide presentation explaining stack unrolling
   Tags:
   - Python
@@ -181,7 +199,9 @@ projects_yaml = <<EOF
   Dash: 	
   Employer: "personal project"
   Impact: 1
-  Description: "Visualized acoustic model probabilities from Sphinx speech recognizer"
+  Description: "Visualized acoustic model from Sphinx-4 speech recognizer"
+  MoreInfo: /images/experience/sphinx.png
+  Caption: X axis is time; Y axis is frequency; Top third shows spectrogram of speech input; Middle third shows probability, with white path showing the highest probability alignment; Colors show abandoned alignments; Bottom third shows finished alignment.
   Tags:
   - Java
   - Swing
@@ -191,7 +211,7 @@ projects_yaml = <<EOF
   Employer: "class project"
   Impact: 1
   Description: "Classified motion by machine learning on accelerometer data"
-  Image: /images/experience/accelerometer.png
+  MoreInfo: /images/experience/accelerometer.png
   Caption: Excerpt from paper demonstrating high accuracy of predictions
   Tags:
   - bash
@@ -201,7 +221,7 @@ projects_yaml = <<EOF
   Employer: "personal project"
   Impact: 1
   Description: "Prototyped calendar reminder popups"
-  Image: /images/experience/alarm_popup.png
+  MoreInfo: /images/experience/alarm_popup.png
   Caption: Screenshot demonstrating alarm popup bar and popup dialog
   Tags:
   - C#
@@ -213,7 +233,7 @@ projects_yaml = <<EOF
   Employer: "class project"
   Impact: 1
   Description: "Created machine translation using synchronized syntax tree transfer rules"
-  Image: /images/experience/machine_translation.png
+  MoreInfo: /images/experience/machine_translation.png
   Caption: Screenshot showing English translations of a given Spanish sentence.
   Tags:
   - Ruby
@@ -241,7 +261,7 @@ projects_yaml = <<EOF
   Dash: 	
   Employer: "Rosetta Stone"
   Impact: 3
-  Description: "Created Rails e-commerce site that synchronizes with Oracle ERP"
+  Description: "Created e-commerce site that synchronizes with Oracle ERP"
   Tags:
   - Ruby
   - Ruby on Rails
@@ -273,7 +293,7 @@ projects_yaml = <<EOF
   Dash: 	
   Employer: "Rosetta Stone"
   Impact: 3
-  Description: "Adapted Oracle iStore web app to become the point of sale solution"
+  Description: "Customized Oracle iStore web app to be point of sale solution"
   Tags:
   - Java
   - JSP
@@ -287,7 +307,7 @@ projects_yaml = <<EOF
   To: "03"
   Employer: "VistaShare"
   Impact: 2
-  Description: "Maintained MS Access/VBA application to track insurance policies"
+  Description: "Maintained MS Access/VBA app to track insurance policies"
   Tags:
   - VBA
   - MS Access
@@ -341,7 +361,7 @@ projects_yaml = <<EOF
 EOF
 
 html = ''
-col_headers = %w[From Dash To Employer Image Description Tags]
+col_headers = %w[From Dash To Employer MoreInfo Description Tags]
 html += "  <tr>\n"
 col_headers.each { |col_header|
   next if col_header == 'Impact'
@@ -349,7 +369,7 @@ col_headers.each { |col_header|
     when 'From' then 'Date'
     when 'Dash' then ''
     when 'To' then ''
-    when 'Image' then ''
+    when 'MoreInfo' then ''
     else col_header
   end
   html += "    <th class='#{col_header}'>#{text}</th>"
@@ -368,16 +388,16 @@ projects.each { |project|
       when 'Caption' then next
       when 'Tags'
         value = ([''] + (value || ['']) + ['']).join(', ')
-      when 'Image'
+      when 'MoreInfo'
         if value.nil?
           nil
+        elsif value.match(%r[^http])
+          value = "<a href='#{value}'>
+            <img src='/images/icon_link.png' width='10' height='10' style='padding-top:3px'/></a>"
         elsif value.match(%r[^/images/])
           value =
             "<a href='#{value}' rel='lightbox' title='#{project['Caption']}'>
-            <img src='/images/lightbox_icon.gif' width='12' height='11'/></a>"
-        elsif value.match(%r[^http])
-          value = "<a href='#{value}'>
-            <img src='/images/lightbox_icon.gif' width='12' height='11'/></a>"
+            <img src='/images/icon_image.png' width='10' height='10' style='padding-top:3px'/></a>"
         end
     end
     html += "    <td class='#{col_header}'>#{value}</td>\n"
@@ -579,6 +599,7 @@ tags_yaml = "
   - OCaml
   - PL/pgSQL
   - PL/SQL
+  - Scala
   - x86 Assembly
 - Interpreted languages:
   - Bash
@@ -590,12 +611,13 @@ tags_yaml = "
   - Ruby
   - VBA
 - Web technologies:
+  - Apache
   - CSS
   - GWT
+  - HAML
   - HTML
   - JSP
   - Ruby on Rails
-  - SVG
   - Tomcat
 - Databases:
   - MongoDB
