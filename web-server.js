@@ -65,7 +65,9 @@ http.createServer(function(request, response) {
       }
     });
   } else {
-    if (!request.url.match(/\./)) {
+    if (request.url == '/') {
+      serveFilename(filename + "/index.html", response);
+    } else if (!request.url.match(/\./)) {
       serveFilename(filename + ".html", response);
     } else {
       serveFilename(filename, response);
