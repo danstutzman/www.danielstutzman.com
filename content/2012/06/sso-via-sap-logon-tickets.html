@@ -1,0 +1,18 @@
+---
+layout: post
+title: Gem for SSO via SAP logon tickets
+date: 2012-06-24
+---
+<p><code>sso_sap</code> is a gem (a Ruby library) that I created for a <a href="http://www.quickleft.com/">Quick Left</a> client.  You might find it useful if:</p>
+
+<ul>
+<li>You're a Ruby web developer</li>
+<li>And you or one of your clients uses the <a href="http://en.wikipedia.org/wiki/SAP_ERP">SAP ERP</a></li>
+<li>And some of your users will be logging into a <a href="http://en.wikipedia.org/wiki/SAP_NetWeaver_Portal">SAP NetwWeaver Portal</a> that issues <a href="http://en.wikipedia.org/wiki/SAP_Logon_Ticket">SAP logon ticket</a> cookies</li>
+<li>And you want <a href="http://en.wikipedia.org/wiki/Single_sign-on">SSO (Single Sign-On)</a> for them so they can link directly from that portal to your web app without logging in to your web app</li>
+<li>And you have an older version of SAP that doesn't support <a href="http://en.wikipedia.org/wiki/Saml">SAML</a></li>
+<li>And you don't want to upgrade SAP to support SAML for some reason</li>
+<li>And you don't want to use the official Java library or Windows DLL for SAP logon tickets</li>
+</ul>
+
+<p>To give it a try, git clone my <a href='https://github.com/danielstutzman/sso_sap_demo'>sso_sap_demo</a> repository.</p>
