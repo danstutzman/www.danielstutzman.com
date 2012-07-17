@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir='ltr' lang='en-US'>
+<head>
+<meta charset='utf-8'>
+<title>
+Song Reader
+</title>
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="TlInwDTJRCsHHHDphCaOq2peQ5JK1OMy1DgTPatOLUw="/>
+<link href="stylesheets/application.css?1322955891" media="screen" rel="stylesheet" type="text/css">
+<meta content='width=400 initial-scale=0.8' name='viewport'>
+
+</head>
+<body>
+<div id='header-background'>
+<div id='header'>
+<div id='logo' style='font-size:25pt'>Song Reader</div>
+<div id='motto'>Turn your sheet music into MP3s</div>
+<br clear='all'>
+</div>
+</div>
+<div id='nav-background'>
+<div id='nav'>
+<ul>
+<li><a href="blog.html">Blog</a></li>
+<li><a href="developer.html">Developer</a></li>
+<li><a href="research.html">Research</a></li>
+</ul>
+</div>
+</div>
+<div id='body'>
+<div id='page_content'>
+<h1 id='page_heading'>
+About the developer
+</h1>
+<p>Daniel Stutzman is a software developer living in Boulder, CO. He works as a consultant, particularly in back-end web development with Ruby on Rails.</p>
+<p>Daniel gained familiarity with artificial intelligence by working on the speech recognition team at <a href="http://www.rosettastone.com">Rosetta Stone</a>, a company that makes language learning software. He also studied natural language processing at the <a href="http://www.colorado.edu">University of Colorado</a> and the <a href="http://linginst07.stanford.edu/">Linguistic Institute</a>.</p>
+<p>His passion for music and sight reading began with piano lessons as a child. He hopes that <em>Song Reader</em> will help beginning musicians to gain comfort with music notation and ultimately to improve their music literacy.</p>
+
+
+</div>
+<script>
+  //<![CDATA[
+    var winW = 0, winH = 0;
+    if (document.body && document.body.offsetWidth) {
+     winW = document.body.offsetWidth;
+     winH = document.body.offsetHeight;
+    }
+    if (document.compatMode=='CSS1Compat' &&
+        document.documentElement &&
+        document.documentElement.offsetWidth ) {
+     winW = document.documentElement.offsetWidth;
+     winH = document.documentElement.offsetHeight;
+    }
+    if (window.innerWidth && window.innerHeight) {
+     winW = window.innerWidth;
+     winH = window.innerHeight;
+    }
+    
+    //document.writeln('Window width = '+winW);
+    //document.writeln('Window height = '+winH);
+    //document.writeln("document.body.scrollWidth = " + document.body.scrollWidth);
+    
+    if (winW >= 760) {
+      var strCSS = document.all ? 'rules' : 'cssRules';  
+      var styles = document.styleSheets[0][strCSS];
+      var i;
+      for (i = 0; i < styles.length; i++) {
+        var style = styles[i];
+        if (style['selectorText'] == '#header' ||
+            style['selectorText'] == '#nav' ||
+            style['selectorText'] == '#body') {
+          style.style['width'] = '800px';
+          style.style['margin'] = '0 auto';
+        }
+      }
+    }
+  //]]>
+</script>
+</div>
+</body>
+</html>

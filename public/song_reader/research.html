@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html dir='ltr' lang='en-US'>
+<head>
+<meta charset='utf-8'>
+<title>
+Song Reader
+</title>
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="TlInwDTJRCsHHHDphCaOq2peQ5JK1OMy1DgTPatOLUw="/>
+<link href="stylesheets/application.css?1322955891" media="screen" rel="stylesheet" type="text/css">
+<meta content='width=400 initial-scale=0.8' name='viewport'>
+
+</head>
+<body>
+<div id='header-background'>
+<div id='header'>
+<div id='logo' style='font-size:25pt'>Song Reader</div>
+<div id='motto'>Turn your sheet music into MP3s</div>
+<br clear='all'>
+</div>
+</div>
+<div id='nav-background'>
+<div id='nav'>
+<ul>
+<li><a href="blog.html">Blog</a></li>
+<li><a href="developer.html">Developer</a></li>
+<li><a href="research.html">Research</a></li>
+</ul>
+</div>
+</div>
+<div id='body'>
+<div id='page_content'>
+<h1 id='page_heading'>
+Research in Optical Music Recognition
+</h1>
+<p>Optical Music Recognition (<span class="caps">OMR</span>) converts a picture of sheet music into a format that can be edited and played. It&#8217;s related to Optical Character Recognition (<span class="caps">OCR</span>), which converts a picture of text into a format that can be edited or searched.</p>
+<p><span class="caps">OMR</span> and <span class="caps">OCR</span> are both open research areas in computer vision, as they haven&#8217;t yet been definitively solved. However, in many situations the current techniques are accurate enough to be usable.</p>
+<p><span class="caps">OMR</span> software products have been commercially available since the 1990&#8217;s, but they make you feed the music score through a scanner connected to a traditional computer. Song Reader requires only a camera phone. This makes the research task more challenging for a few reasons:</p>
+<table>
+<tr>
+<th>Images from a scanner</th>
+<th>Images from a camera phone</th>
+</tr>
+<tr>
+<td>
+<p>Horizontal lines are straight, because the scanner&#8217;s physical design flattens the paper and keeps it from turning.</td><br />
+<td>Horizontal lines are slanted, because it&#8217;s impractical to hold the camera perfectly aligned, and bound volumes might not lie flat.</td></p>
+</tr>
+<tr>
+<td>The paper is much brighter than the ink on it, because scanners have a light source inside.</td>
+<td>The paper is similar in brightness to the ink on it, because light sources are farther away and maybe blocked.</td>
+</tr>
+<tr>
+<td>Symbols are easily recognizable, because the scanner&#8217;s camera is close to the paper, and its motor controls the paper&#8217;s movement.</td>
+<td>Symbols are blurry, because a person must attempt to hold the camera still a short distance from the paper. Also <span class="caps">JPEG</span> image compression degrades the image.</td>
+</tr>
+</table>
+
+
+</div>
+<script>
+  //<![CDATA[
+    var winW = 0, winH = 0;
+    if (document.body && document.body.offsetWidth) {
+     winW = document.body.offsetWidth;
+     winH = document.body.offsetHeight;
+    }
+    if (document.compatMode=='CSS1Compat' &&
+        document.documentElement &&
+        document.documentElement.offsetWidth ) {
+     winW = document.documentElement.offsetWidth;
+     winH = document.documentElement.offsetHeight;
+    }
+    if (window.innerWidth && window.innerHeight) {
+     winW = window.innerWidth;
+     winH = window.innerHeight;
+    }
+    
+    //document.writeln('Window width = '+winW);
+    //document.writeln('Window height = '+winH);
+    //document.writeln("document.body.scrollWidth = " + document.body.scrollWidth);
+    
+    if (winW >= 760) {
+      var strCSS = document.all ? 'rules' : 'cssRules';  
+      var styles = document.styleSheets[0][strCSS];
+      var i;
+      for (i = 0; i < styles.length; i++) {
+        var style = styles[i];
+        if (style['selectorText'] == '#header' ||
+            style['selectorText'] == '#nav' ||
+            style['selectorText'] == '#body') {
+          style.style['width'] = '800px';
+          style.style['margin'] = '0 auto';
+        }
+      }
+    }
+  //]]>
+</script>
+</div>
+</body>
+</html>

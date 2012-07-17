@@ -2,3 +2,4 @@
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM 
 rvm use ruby-1.8.7-p334
 webby rebuild
+cp -R public/ output/

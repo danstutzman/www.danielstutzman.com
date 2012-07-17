@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html dir='ltr' lang='en-US'>
+<head>
+<meta charset='utf-8'>
+<title>
+Song Reader
+</title>
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="TlInwDTJRCsHHHDphCaOq2peQ5JK1OMy1DgTPatOLUw="/>
+<link href="stylesheets/application.css?1322955891" media="screen" rel="stylesheet" type="text/css">
+<meta content='width=400 initial-scale=0.8' name='viewport'>
+<link href="/posts.atom" rel="alternate" title="ATOM" type="application/atom+xml">
+
+</head>
+<body>
+<div id='header-background'>
+<div id='header'>
+<div id='logo' style='font-size:25pt'>Song Reader</div>
+<div id='motto'>Turn your sheet music into MP3s</div>
+<br clear='all'>
+</div>
+</div>
+<div id='nav-background'>
+<div id='nav'>
+<ul>
+<li><a href="blog.html">Blog</a></li>
+<li><a href="developer.html">Developer</a></li>
+<li><a href="research.html">Research</a></li>
+</ul>
+</div>
+</div>
+<div id='body'>
+<div id='howto'>
+<h2>Try it yourself</h2>
+<ol>
+<li>Find a page of sheet music.</li>
+<li>Sit under a bright light.</li>
+<li>Take a picture of the music with your cell phone or iPod Touch.</li>
+<li>Try again if it came out too blurry.</li>
+<li>
+Email it to
+<a href='mailto:beta@songreader.net'>beta@songreader.net</a>
+</li>
+<li>Wait a few minutes for a reply.</li>
+<li>Play the attached MP3.</li>
+</ol>
+<i>No registration required!</i>
+</div>
+<div id='left-side'>
+<div class='post post-4'>
+<h2><a href="/2011/12/02/reality-check-part-2">Reality Check, part 2</a></h2>
+<div class='entrybody'>
+<p>Photos contributed by friends are more clear and readable than I expected.  So maybe blurriness won&#8217;t be a big problem.  Nevertheless I overhauled staff line detection to handle blurriness better.  This photo shows it performing well in a stress test with a steep slope:</p>
+<p><img src='images/20111202.diagonal.png' width='297' height='308'/></p>
+</div>
+<div class='meta'>
+<ul>
+<li class='date'>
+Posted on December 02, 2011
+</li>
+<li class='comments'><a href="/2011/12/02/reality-check-part-2#comments">0 comments</a></li>
+</ul>
+</div>
+
+</div>
+<div class='post post-3'>
+<h2><a href="/2011/11/06/reality-check">Reality Check</a></h2>
+<div class='entrybody'>
+<p>All this time I&#8217;ve been testing on somewhat blurry images:<br />
+<img src='images/20111106.somewhat.jpeg'/></p>
+<p>But just now I tried it out with a different camera, poor lighting conditions, and some accidental motion blur:<br />
+<img src='images/20111106.blurry.jpeg'/></p>
+<p>Hmm, it would be pretty hard for me to transcribe that even manually, so automatically might not be feasible.  I might have to ask people to take pictures from closer up, instead of zooming out to get the full page.</p>
+</div>
+<div class='meta'>
+<ul>
+<li class='date'>
+Posted on November 06, 2011
+</li>
+<li class='comments'><a href="/2011/11/06/reality-check#comments">0 comments</a></li>
+</ul>
+</div>
+
+</div>
+<div class='post post-2'>
+<h2><a href="/2011/10/25/launched-the-web-site">Launched the web site</a></h2>
+<div class='entrybody'>
+<p>At the time I write this, Song Reader is a stand-alone program that runs on my Mac Mini. And it only has been run on a few different photos, because I haven&#8217;t finished implementing the techniques to accurately read those photos yet. So it seemed early to publicize on the web.</p>
+<p>But the other day, a friend encouraged me to create a web site and a demo for what I have so far. I think he&#8217;s right. Improving accuracy is an endless task, but even a rather inaccurate scan might be useful to someone, especially once I add online tools for manual error correction. Meanwhile it&#8217;s pretty motivating for me to have an audience.</p>
+<p>So, here goes&#8230; I&#8217;ll start with this static blog site for now, and the next goal will be to get a working demo that you all can try out. Thanks for your interest!</p>
+</div>
+<div class='meta'>
+<ul>
+<li class='date'>
+Posted on October 25, 2011
+</li>
+<li class='comments'><a href="/2011/10/25/launched-the-web-site#comments">1 comment</a></li>
+</ul>
+</div>
+
+</div>
+
+</div>
+<!-- <div id='search'> Search </div> -->
+<br clear='all'>
+<script>
+  //<![CDATA[
+    var winW = 0, winH = 0;
+    if (document.body && document.body.offsetWidth) {
+     winW = document.body.offsetWidth;
+     winH = document.body.offsetHeight;
+    }
+    if (document.compatMode=='CSS1Compat' &&
+        document.documentElement &&
+        document.documentElement.offsetWidth ) {
+     winW = document.documentElement.offsetWidth;
+     winH = document.documentElement.offsetHeight;
+    }
+    if (window.innerWidth && window.innerHeight) {
+     winW = window.innerWidth;
+     winH = window.innerHeight;
+    }
+    
+    //document.writeln('Window width = '+winW);
+    //document.writeln('Window height = '+winH);
+    //document.writeln("document.body.scrollWidth = " + document.body.scrollWidth);
+    
+    if (winW >= 760) {
+      var strCSS = document.all ? 'rules' : 'cssRules';  
+      var styles = document.styleSheets[0][strCSS];
+      var i;
+      for (i = 0; i < styles.length; i++) {
+        var style = styles[i];
+        if (style['selectorText'] == '#header' ||
+            style['selectorText'] == '#nav' ||
+            style['selectorText'] == '#body') {
+          style.style['width'] = '800px';
+          style.style['margin'] = '0 auto';
+        }
+      }
+    }
+  //]]>
+</script>
+</div>
+</body>
+</html>
