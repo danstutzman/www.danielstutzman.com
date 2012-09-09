@@ -20,7 +20,7 @@ extension: html
       %br
   .entry-content
     ~ render(last_post)
-%h2.entry-title Archives
+%h2.entry-title Blog Archives
 %ul
   - months = posts.collect { |post| post.date.strftime('%b %Y') }.uniq
   - months.each do |month|
