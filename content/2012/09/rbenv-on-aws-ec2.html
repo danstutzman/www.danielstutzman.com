@@ -1,0 +1,67 @@
+---
+layout: post
+title: How to install RBEnv on EC2 using the Amazon Linux AMI
+date: 2012-09-23
+---
+<h3>Explanations</h3>
+<ul>
+<li>Amazon's Elastic Compute Cloud (EC2) is a popular low-cost way to rent a virtual server for pennies per hour.</li>
+<li>An Amazon Machine Image (AMI) lets you choose the operating system to install on your EC2 image.  The Amazon Linux AMI is the default choice.</li>
+<li>RBEnv is a set of shell scripts that make it easy to switch between different versions of Ruby.  It's an alternative to RVM.</li>
+<li>The reason someone would want to install RBEnv on an EC2 instance is probably so they can run Ruby commands with the benefit of RBEnv to specify a particular version of Ruby and to keep gems (Ruby libraries) organized.</li>
+<li>In my case, I wanted to run Capistrano scripts from an Amazon EC2 image because its IP address would be stable, unlike the IP address that my home Internet connection assigns to me.</li>
+</ul>
+
+<hr/>
+
+<h3>Install Git</h3>
+<ul>
+<li>sudo yum install -y git</li>
+</ul>
+
+<h3>Setup access to your own Git repo (optional)</h3>
+<ul>
+<li>ssh-keygen -t rsa -C <i>your-email-username@your-email-domain.com</i></li>
+<li>cat ~/.ssh/id_rsa.pub</li>
+<li>Add that SSH key to GitHub as follows:<ul>
+  <li>Sign in to github.com</li>
+  <li>Click Account Settings (wrenches in upper-right)</li>
+  <li>Click SSH Keys</li>
+  <li>Click Add SSH Key</li>
+  <li>Type in a title</li>
+  <li>Paste in the SSH key from the cat output earlier</li>
+</ul></li>
+<li>git clone <i>location-of-your-repo</i></li>
+</ul>
+
+<h3>Install RBEnv and the ruby-build plugin for it</h3>
+<ul>
+<li>git clone git://github.com/sstephenson/rbenv.git .rbenv</li>
+<li>echo 'export PATH="$HOME/.rbenv/bin:$PATH"' &gt;&gt; ~/.bash_profile</li>
+<li>echo 'eval "$(rbenv init -)"' &gt;&gt; ~/.bash_profile</li>
+<li>mkdir -p ~/.rbenv/plugins</li>
+<li>cd ~/.rbenv/plugins</li>
+<li>git clone git://github.com/sstephenson/ruby-build.git</li>
+<li><i>exit out of the shell and ssh in again</i></li>
+</ul>
+
+<h3>Install Ruby</h3>
+<ul>
+<li>sudo yum install -y gcc make zlib zlib-devel openssl openssl-devel</li>
+<li>rbenv install 1.9.3-p194
+  <br/><i>Warning: this step took me 38 minutes on a micro-sized instance.  The reason is because compiling Ruby from source is CPU-intensive, and micro-sized instances have their CPU resources throttled back drastically, with the exception of the first two seconds.  If this is too long for you, consider resizing your instance to "small" until this step finishes.</i>
+</li>
+<li>rbenv rehash</li>
+<li>rbenv global 1.9.3-p194</li>
+</ul>
+
+<h3>Test Ruby including some libraries you'll want later</h3>
+<ul>
+<li>irb</li><ul>
+  <li>require 'openssl'<br/>
+  <i>This should return true</i></li>
+  <li>require 'zlib'<br/>
+  <i>This should return true</i></li>
+  <li>exit</li>
+</ul></li>
+</ul>
