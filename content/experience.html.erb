@@ -8,6 +8,24 @@ filter: erb
 projects_yaml = <<EOF
 - From: 2012
   Dash:
+  Employer: Quick Left client
+  Impact: 2
+  Description: "Helped with development of restaurant loyalty site"
+  MoreInfo: https://redroyalty.redrobin.com/
+  Tags:
+  - Ruby
+  - Ruby on Rails
+  - jQuery
+  - JavaScript
+  - Nginx
+  - Unicorn
+  - MS SQL Server
+  - PostgreSQL
+  - HTML
+  - CSS
+
+- From: 2012
+  Dash:
   Employer: personal project
   Impact: 1
   Description: "Created pop-up time tracker app for Mac"
@@ -437,7 +455,7 @@ table_rows = html
       -webkit-box-shadow: 1px 1px 5px #888;
       padding: 10px;
       border: 1px black solid;
-      height: 12em; /* for IE7 */
+      height: 15em; /* for IE7 */
     }
     td, th {
       vertical-align: top;
@@ -627,17 +645,19 @@ tags_yaml = "
   - CSS
   - GWT
   - HAML
-  - HTML
+  - Nginx
+  - jQuery
   - JSP
   - Ruby on Rails
   - Tomcat
+  - Unicorn
 - Databases:
   - MongoDB
   - MS Access
+  - MS SQL Server
   - MySQL
   - Oracle
   - PostgreSQL
-  - SQL Server
   - SQLite
 "
 grouping_maps = YAML::load(tags_yaml)
