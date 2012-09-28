@@ -6,10 +6,10 @@ date: 2012-09-23
 <h3>Explanations</h3>
 <ul>
 <li>Amazon's Elastic Compute Cloud (EC2) is a popular low-cost way to rent a virtual server for pennies per hour.</li>
-<li>An Amazon Machine Image (AMI) lets you choose the operating system to install on your EC2 image.  The Amazon Linux AMI is the default choice.</li>
+<li>An Amazon Machine Image (AMI) lets you choose the operating system to install on your EC2 instance.  The Amazon Linux AMI is the default choice.</li>
 <li>RBEnv is a set of shell scripts that make it easy to switch between different versions of Ruby.  It's an alternative to RVM.</li>
-<li>The reason someone would want to install RBEnv on an EC2 instance is probably so they can run Ruby commands with the benefit of RBEnv to specify a particular version of Ruby and to keep gems (Ruby libraries) organized.</li>
-<li>In my case, I wanted to run Capistrano scripts from an Amazon EC2 image because its IP address would be stable, unlike the IP address that my home Internet connection assigns to me.</li>
+<li>The reason someone would want to install RBEnv on an EC2 instance is probably so they can run a particular version of Ruby.</li>
+<li>In my case, I wanted to run Capistrano scripts from an Amazon EC2 instance because I could assign the instance a static IP address and have that address whitelisted for a client's firewall, which I couldn't do with my home Internet connection's dynamic IP address.</li>
 </ul>
 
 <hr/>
