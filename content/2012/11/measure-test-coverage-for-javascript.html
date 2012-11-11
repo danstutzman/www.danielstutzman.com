@@ -1,0 +1,77 @@
+---
+layout: post
+title: Which lines of your JavaScript project have test coverage?
+date: 2012-11-11
+---
+
+<p>If you write automated tests (as I do) but don't strictly follow the <acronym title='Test-Driven Development'>TDD</acronym> principle of writing the test first (I usually don't), you'll find yourself with some code that is covered by automated tests, and some code that is not.  So I suggest you use a tool that shows you exactly which lines of source code are covered.</p>
+
+<p>Why measure this when you already know a high-priority code area that obviously lacks coverage, and you're not sure you'll even get around to it?  Because the reason we procrastinate is that we doubt we can make a difference.  With a tool you can see the pool of uncovered lines get smaller and smaller.</p>
+
+<p>I'll show you my current setup for measuring test coverage in a JavaScript project.  There's probably a better way to do it, and there will definitely be newer better ways in a couple more years as the JavaScript ecosystem further matures.  For example, I almost got <a href='http://migrii.github.com/blanket/'>blanket.js</a> working but had trouble combining it with require.js and didn't want to rewrite my Jasmine tests as QUnit anyway.
+
+<h3>1. Concatenate requirejs-enabled code</h3>
+
+<pre>
+node tools/r.js -o tools/rjs-build-config.js optimize=none
+</pre>
+
+<p>The biggest problem I had was tools expecting the JavaScript to be loaded with the page, not afterward via script injection as require.js does.  So first I run <code>r.js</code> to concatenate my requirejs-wrapped CoffeeScript into a single JavaScript file that I'll load with a &lt;script&gt; tag.  I'm reusing my existing build config except with <code>optimize=none</code> so that the source lines are still readable and separated.  This outputs to the <code>www-built</code> directory.</p>
+
+<h3>2. Instrument the source code</h3>
+
+<pre>
+java -jar ../JSCover/target/dist/JSCover-all.jar -fs www-built www-coverage
+</pre>
+
+<p>Then I call JSCover to copy the <code>www-built</code> directory to the <code>www-coverage</code> directory and insert lines of instrumentation code to track whether or not each line of my original code was reached in execution.  Below is an example:</p>
+
+<pre>
+_$jscoverage['js/main.js'][502]++;
+low = 0;
+_$jscoverage['js/main.js'][503]++;
+high = haystack.length - 1;
+</pre>
+
+<h3>3. Run the tests and see the report</h3>
+
+<pre>
+open "http://localhost:8888/www-coverage/TestRunner-prod.html?$PARAMS"
+</pre>
+
+<p>Finally I run the Jasmine tests.  I wrote a primitive report that dumps out the source code in a &lt;pre&gt; and prints a star beside any lines that aren't covered:</p>
+
+<pre>
+function run_jscover_report() {
+  out = '';
+  out += "&lt;pre&gt;\n";
+  for (filename in _$jscoverage) {
+    if (filename == 'branchData') continue;
+    for (line_num in _$jscoverage[filename]['source']) {
+      var count = _$jscoverage[filename][parseInt(line_num) + 1];
+      out += ((count == 0) ? "* " : "  ");
+      out += (line_num);
+      out += (_$jscoverage[filename]['source'][line_num]);
+      out += ("\n");
+    }
+  }
+  out += ("&lt;/pre&gt;\n");
+  return out;
+}
+
+if (typeof(top._$jscoverage) !== 'undefined') {
+  jasmine.getEnv().addReporter({
+    reportRunnerResults: function() {
+      var report = run_jscover_report();
+      jQuery('body').append(report);
+    }
+  });
+}
+</pre>
+
+<p>Here's an excerpt of that report: (yes, the line numbers are one off for some reason)</p>
+
+<pre>
+  501      low = 0;
+  502      high = haystack.length - 1;
+</pre>
