@@ -22,4 +22,4 @@ filter: haml
         %guid= "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}"
         %pubDate
           = Date.parse(post.date.to_s).strftime('%a, %d %b %Y %H:%M:%S %z')
-        %description= render(post)
+        %description= render(post).gsub(/&([a-z0-9]+)=/, '&amp;\1=').gsub('&mdash;', ' - ')

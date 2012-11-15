@@ -24,4 +24,4 @@ filter: haml
         "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}" }  |
       %updated= "#{post.date}T06:00:00Z"
       %content(type='html')
-        = render(post)
+        = render(post).gsub(/&([a-z0-9]+)=/, '&amp;\1=').gsub('&mdash;', ' - ')
