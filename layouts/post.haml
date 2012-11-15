@@ -34,7 +34,8 @@ filter:    haml
       #container
         #content
           - if @page.title && @page.title != ''
-            %h2.entry-title
+            -# this h1 shows on archive pages, not on home page
+            %h1.entry-title
               %a{ :href => url_for(@page) }
                 = @page.title
           .entry-meta
