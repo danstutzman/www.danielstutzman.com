@@ -1,3 +1,4 @@
 #!/bin/bash
 bundle exec webby rebuild
 cp -R public/ output/
+ruby validate_rss.rb
