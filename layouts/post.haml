@@ -46,6 +46,21 @@ filter:    haml
           .entry-content
             ~ @content
       = render(:partial => '/sidebar')
+      %br(clear='both')
+      %hr
+
+      - path = url_for(@page)
+      - path = url_for(@last_post) if path == '/'
+      - path = path.gsub(/\.html$/, '')
+      %script= "var disqus_identifier = '#{path}';"
+      #disqus_thread
+      :javascript
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://danielstutzman.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] ||
+         document.getElementsByTagName('body')[0]).appendChild(dsq);
     #footer
       #colophon
         #site-info

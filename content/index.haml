@@ -6,20 +6,20 @@ filter: haml
 extension: html
 ---
 - posts = %w[2011 2012].map { |year| @pages.find(:all, :in_directory => year, :recursive    => true,  :sort_by      => 'date') }.flatten.reverse
-- last_post = posts.first
+- @last_post = posts.first
 #post-238.post-238.post.type-post.status-publish.format-standard.hentry.category-all.category-howto.category-tech
   %h2.entry-title
-    %a{ :href => url_for(last_post).gsub(/\.html$/, '') }
-      = last_post.title
+    %a{ :href => url_for(@last_post).gsub(/\.html$/, '') }
+      = @last_post.title
   .entry-meta
-    - if last_post.date
+    - if @last_post.date
       %span.meta-prep.meta-prep-entry-date Published
       %span.entry-date
         %abbr.published
-          = last_post.date
+          = @last_post.date
       %br
   .entry-content
-    ~ render(last_post)
+    ~ render(@last_post)
 %h2.entry-title Blog Archives
 %ul
   - months = posts.collect { |post| post.date.strftime('%b %Y') }.uniq
