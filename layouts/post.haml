@@ -52,7 +52,7 @@ filter:    haml
 
       - path = url_for(@page)
       - path = url_for(@last_post) if path == '/'
-      - path = path.gsub(/\.html$/, '')
+      - path = path.gsub('/blog', '').gsub(/\.html$/, '')
       %script= "var disqus_identifier = '#{path}';"
       #disqus_thread
       :javascript

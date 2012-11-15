@@ -5,7 +5,7 @@ extension: xml
 layout: nil
 filter: haml
 ---
-- posts = @pages.find(:all, :in_directory => '2011', :recursive => true, :sort_by => 'date', :reverse => true, :limit => 6)
+- posts = @pages.find(:all, :in_directory => 'blog', :recursive => true, :sort_by => 'date', :reverse => true, :limit => 6)
 
 !!! XML
 %rss{ :version => "2.0" } 
@@ -18,8 +18,8 @@ filter: haml
     - for post in posts
       %item 
         %title= post.title 
-        %link= "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}"
-        %guid= "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}"
+        %link= "http://www.danielstutzman.com#{post.url.gsub('/blog', '').gsub(/\.html$/, '')}"
+        %guid= "http://www.danielstutzman.com#{post.url.gsub('/blog', '').gsub(/\.html$/, '')}"
         %pubDate
           = Date.parse(post.date.to_s).strftime('%a, %d %b %Y %H:%M:%S %z')
         %description= render(post).gsub(/&([a-z0-9]+)=/, '&amp;\1=').gsub('&mdash;', ' - ')

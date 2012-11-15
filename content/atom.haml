@@ -3,7 +3,7 @@ extension: xml
 layout: nil
 filter: haml
 ---
-- posts = @pages.find(:all, :in_directory => '2011', :recursive => true, :sort_by => 'date', :reverse => true, :limit => 6)
+- posts = @pages.find(:all, :in_directory => 'blog', :recursive => true, :sort_by => 'date', :reverse => true, :limit => 6)
 
 !!! XML
 %feed(xmlns='http://www.w3.org/2005/Atom')
@@ -19,9 +19,9 @@ filter: haml
   - for post in posts
     %entry 
       %title= post.title
-      %id= "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}"
+      %id= "http://www.danielstutzman.com#{post.url.gsub('/blog', '').gsub(/\.html$/, '')}"
       %link{ :href =>                                                     |
-        "http://www.danielstutzman.com#{post.url.gsub(/\.html$/, '')}" }  |
+        "http://www.danielstutzman.com#{post.url.gsub('/blog', '').gsub(/\.html$/, '')}" }  |
       %updated= "#{post.date}T06:00:00Z"
       %content(type='html')
         = render(post).gsub(/&([a-z0-9]+)=/, '&amp;\1=').gsub('&mdash;', ' - ')
