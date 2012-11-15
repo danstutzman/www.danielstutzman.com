@@ -20,16 +20,16 @@ and <i>filter</i>, etc.  But I didn't like its slow compilation speed; on my set
 <p>I tried making the third option more palatable by writing a Java code
 preprocessor for syntactic sugar :-)  So now I can write code like this:</p>
 
-<pre>List<Integer> positiveInts = Arrays.asList(new Integer[] { 1, 2, 3 });
-List<Integer> negativeInts = MAP_LO_LO(positiveInts, Integer, Integer, {
+<pre>List&lt;Integer&gt; positiveInts = Arrays.asList(new Integer[] { 1, 2, 3 });
+List&lt;Integer&gt; negativeInts = MAP_LO_LO(positiveInts, Integer, Integer, {
   return -_;
 });
 </pre>
 
 <p>MAP_LO_LO is one of the many C preprocessor macro I created.  In this case, the _LO_LO name is because it maps from a List of objects to a List of objects.  Postfix-style naming is unfortunately necessary to support arrays and primitives like <i>int</i>, <i>float</i>, etc.  When you run the <i>cpp</i> command on the above code, it expands to something like:</p>
 
-<pre>List<Integer> positiveInts = Arrays.asList(new Integer[] { 1, 2, 3 });
-List<Integer> negativeInts = map(positiveInts, new Mapper&lt;Integer, Integer&gt;() {
+<pre>List&lt;Integer&gt; positiveInts = Arrays.asList(new Integer[] { 1, 2, 3 });
+List&lt;Integer&gt; negativeInts = map(positiveInts, new Mapper&lt;Integer, Integer&gt;() {
   public Integer transform(Integer _) {
     return -_;
   }
@@ -50,7 +50,7 @@ List<Integer> negativeInts = map(positiveInts, new Mapper&lt;Integer, Integer&gt
 <ul>
 <li>This library is alpha and abandonware</li>
 <li>Windows users will have to download a <i>cpp.exe</i></li>
-<li>Unconventional use of the C preprocessor could confuse people
+<li>Unconventional use of the C preprocessor could confuse people</li>
 <li>Anonymous classes don't conveniently express some use cases with checked exceptions or non-local control flow, <a href='http://gafter.blogspot.com/2006/08/use-cases-for-closures.html'>as Neal Gafter points out</a>.</li>
 </ul>
 

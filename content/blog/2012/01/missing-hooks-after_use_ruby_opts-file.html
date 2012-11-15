@@ -3,7 +3,7 @@ layout: post
 title: Missing hooks/after_use_jruby_opts file
 date: 2012-01-25
 ---
-<p>After joining a JRuby project that used RVM and had an <i>.rvmrc</i> file in source control, I noticed the following error message when I <i>cd</i>'d into the project directory:</i>
+<p>After joining a JRuby project that used RVM and had an <i>.rvmrc</i> file in source control, I noticed the following error message when I <i>cd</i>'d into the project directory:</p>
 
 <pre>chmod: /Users/dstutzman/.rvm/hooks/after_use_jruby_opts: No such file or directory
 </pre>
@@ -43,7 +43,7 @@ chmod +x ${rvm_path}/hooks/after_use_jruby_opts
 <pre>SyntaxError: -e:1: syntax error, unexpected ':'</pre>
 
 <p>Fortunately, upgrading RVM got <i>PROJECT_JRUBY_OPTS</i> working again,
-   so running that same command was the same as running:
+   so running that same command was the same as running:</p>
 
 <pre>jruby --1.9 -e 'p({ a: 3 })'</pre>
 
