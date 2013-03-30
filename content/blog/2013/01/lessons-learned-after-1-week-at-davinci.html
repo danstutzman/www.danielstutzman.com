@@ -1,0 +1,41 @@
+---
+layout: post
+title: Lessons learned after one week at DaVinci
+date: 2013-01-18
+---
+<p>Well I made it to the end of my first week of teaching at <a href="http://www.davincicoders.com">DaVinci Coders</a>.  In ten more weeks they will walk out as certified Ruby on Rails developers.  I've already learned a lot:</p>
+
+<h3>Avoid "setup bombs" hidden in new content</h3>
+
+<p>The following issues took a lot longer than expected:</p>
+<ul>
+  <li>Installing SVN on a Mac with Homebrew (eventually we used a binary instead)</li>
+  <li>Setting up shell aliases</li>
+  <li>Accepting the certificate for the version control server</li>
+  <li>Checking out a repo given a URL</li>
+  <li>Exiting out of emacs when it was set as the default EDITOR</li>
+  <li>Entering the version control username/password</li>
+</ul>
+
+<p>Ideally all these steps are done at the beginning, either by an expert or possibly by the student, given screencast videos.</p>
+
+<h3>The default setups aren't ideal for learning</h3>
+
+<p>Here are more setup steps that are optional but would give the beginner a better learning environment:</p>
+
+<ul>
+  <li>Add coloration to ls output</li>
+  <li>Add coloration to PS1</li>
+  <li>Show the entire working directory in PS1</li>
+  <li>Terminal windows should default to a large size and large font</li>
+</ul>
+
+<h3>Teach the GUI tool, not the command-line tool, when you have a choice.</h3>
+
+<p>GUI tools provide context in the form of: labeled buttons, dialog boxes, right-click popup menus, etc.  Shell commands force beginners to remember not only the commands themselves but the current shell/filesystem state (working directory, last svn status output, last ls output, etc.).</p>
+
+<ul>
+  <li>Use Sublime Text's File menu instead of invoking subl from the command-line</li>
+  <li>Use Finder instead of cp, mv, rm, etc.</li>
+  <li>Use SvnX instead of the svn command</li>
+</ul>
