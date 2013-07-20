@@ -1,0 +1,24 @@
+---
+layout: post
+title: How to use Rails form helpers from Sinatra
+date: 2013-07-19
+---
+<p>Sinatra apparently has a couple form helper gems:</p>
+
+<ul>
+  <li><a href="https://github.com/nesquena/sinatra_more">sinatra_more</a></li>
+  <li><a href="https://github.com/twilson63/sinatra-formhelpers">sinatra-formhelpers</a></li>
+</ul>
+
+<p>See also a <a href="http://stackoverflow.com/questions/12207161/good-forms-helpers-for-sinatra">StackOverflow question asking about form helper libraries.</a></p>
+
+<p>The class I teach is learning Sinatra mainly as a stepping-stone to Rails, so it's more convenient to just use the Rails form helpers directly, by including the following lines in the Sinatra source code:</p>
+
+<pre>
+require 'action_view' # for Rails form helpers
+
+# for Rails form helpers
+helpers ActionView::Helpers::FormTagHelper
+</pre>
+
+<p>Now form helpers like <code><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-text_field_tag">text_field_tag</a></code> are available to your views.</p>
