@@ -1,0 +1,39 @@
+---
+layout: post
+title: 'Fixing a Disqus "identifier conflict"'
+date: 2014-01-05
+---
+<p>Are several of your web pages all showing the same Disqus comments?  Even though you're correctly setting the <code>disqus_identifier</code> and <code>disqus_url</code> variables?</p>
+
+<p>Are you pondering over <a href='http://help.disqus.com/customer/portal/articles/662547-why-are-the-same-comments-showing-up-on-multiple-pages-'>the identifier conflict help page</a> or the mysterious "Disqus Discussions Editor" trying to figure out what to do?
+
+<p>Here's what seemed to fix it for me:</p>
+
+<ol>
+  <li>I set the <code>disqus_url</code> variable too (previously I was only setting <code>disqus_identifier</code>).</li>
+  <li>I added a character to the end of all my <code>disqus_identifier</code> assignments.  Surprisingly, this did not make all the comments disappear; just the bad duplicate ones!</li>
+  <li>Not sure if this was necessary, but I disabled the Disqus plugin when the hostname is <code>localhost:8888</code>.</li>
+</ol>
+</p>
+
+<p>Here's the code I used, in Ruby HAML syntax.</p>
+
+<pre>
+- path = url_for(@page)
+- path = url_for(@last_post) if path == '/'
+- path = path.gsub('/blog', '').gsub(/\.html$/, '')
+%script
+  = "var disqus_identifier = '#{path}1'; // add 1 to fix Disqus bug"
+  = "var disqus_shortname = 'danielstutzman';"
+  = "var disqus_url = 'http://www.danielstutzman.com#{path}';"
+#disqus_thread
+:javascript
+  if (document.location.host !== 'localhost:8888') {
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  }
+</pre>
