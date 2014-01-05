@@ -53,15 +53,20 @@ filter:    haml
       - path = url_for(@page)
       - path = url_for(@last_post) if path == '/'
       - path = path.gsub('/blog', '').gsub(/\.html$/, '')
-      %script= "var disqus_identifier = '#{path}';"
+      %script
+        = "var disqus_identifier = '#{path}1'; // add 1 to fix Disqus bug"
+        = "var disqus_shortname = 'danielstutzman';"
+        = "var disqus_url = 'http://www.danielstutzman.com#{path}';"
       #disqus_thread
       :javascript
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = 'http://danielstutzman.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] ||
-         document.getElementsByTagName('body')[0]).appendChild(dsq);
+        if (document.location.host !== 'localhost:8888') {
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+        }
     #footer
       #colophon
         #site-info
