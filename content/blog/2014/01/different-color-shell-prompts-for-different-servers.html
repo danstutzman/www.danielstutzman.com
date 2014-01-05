@@ -1,0 +1,23 @@
+---
+layout: post
+title: Different color shell prompts for different servers
+date: 2014-01-05
+---
+<p>It's all too easy to accidentally run the right command -- on the wrong server.  (Hopefully you're using some automated deployment process to roll out new code to production servers, instead of directly running shell commands on production servers.  And hopefully you're writing and testing code on your own machine, not some shared development server.  Even so, it's likely you have SSH access to at least one machine).</p>
+
+<p>To reduce the chance of mistakes or confusion, you can use ANSI escape codes to change the background color of your shell prompt, otherwise known as the <code>PS1</code> environment variable.  Just add one of the following lines to the hidden file <code>.bashrc</code> in your home directory:</p>
+
+<ul>
+  <li>Reverse video (black on white text) for my MacBook Pro:
+    <pre>export PS1="\[$(tput smso)\]\w\$\[$(tput rmso)\] "</pre>
+  </li>
+  <li>Gray text on red background, showing username and hostname:
+    <pre>export PS1="\[$(tput setab 1)$(tput setaf 7)\]\u@\h:\w\$\[$(tput sgr0)\] "</pre>
+  </li>
+  <li>Black text on green background, showing username and hostname:
+    <pre>export PS1="\[$(tput setab 2)$(tput setaf 0)\]\u@\h:\w\$\[$(tput sgr0)\] "</pre>
+  </li>
+  <li>Search for "bash prompt generator" for an interactive program to customize your own.</li>
+</ul>
+
+<p>Note that when you edit your <code>.bashrc</code>, changes won't take effect until you open a new shell window.</p>
