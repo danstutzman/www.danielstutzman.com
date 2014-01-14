@@ -1,0 +1,145 @@
+---
+layout: post
+title: 'Embed just a cookbook in your Ruby project, not a whole kitchen'
+date: 2014-01-13
+---
+
+<p>
+<i>
+<b>TL;DR</b>
+To embed a Chef cookbook in your Ruby web project, run <code>berks cookbook cookbook</code> from your project's top-level directory.  Setup Vagrant so everyone can easily deploy.  But for production, point to the cookbook from a <code>Berkfile</code> in a kitchen outside your project, with the <code>git</code> or <code>path</code> option.
+</i>
+</p>
+
+<p>If you're a Ruby web developer and you handle deployment yourself (instead of having a sysadmin or Heroku do it for you), you can imagine the benefit of automating deployment.  This post assumes that you've decided on Chef because of its popularity with the Ruby community, and now you're planning to write a Chef cookbook and distribute it with your Ruby project, so that future maintainers can easily deploy with your cookbook.</p>
+
+<p>Unfortunately, the Chef documentation assumes you have a single "chef-repo" in version control, which contains cookbooks for all your projects, as well as info you wouldn't want to make public, such as passwords.  So it's not obvious how your chef-repo and your project's repo should relate to each other.  Given the enormous flexibility of Chef and Ruby and community tool contributions, there must be a way to supply a cookbook along with your project -- but how?</p>
+
+<p>(For the rest of this post, I'll assume you're using chef-solo with a kitchen directory created by <code>knife solo init</code>, instead of chef-server with a chef-repo, but the two situations are similar.)</p>
+
+<h3>Solution #1 (bad): embed your project inside your cookbook</h3>
+
+<p>
+<b>Recommended by</b>
+<a href='http://misheska.com/blog/2013/06/16/getting-started-writing-chef-cookbooks-the-berkshelf-way/'>Mischa Taylor's post</a>, but it's probably intended as a toy example.
+</p>
+
+<p>
+<b>Approach</b>
+Start with an empty Berks cookbook: <code>berks cookbook myface</code>.
+Later, add your source code to <code>templates</code> (e.g. <code>templates/default/index.php.erb</code> for a PHP app) and refer to it with <code>template</code> from your recipe.
+</p>
+
+<p>
+<b>Advantage</b>
+It's straightforward to see how your Chef recipe finds your project's source code files; they're right under <code>templates</code> or <code>files</code>.
+</p>
+
+<p>
+<b>Disadvantage</b>
+Requires turning your project into a Chef cookbook, burying its source files under <code>templates</code> and <code>files</code>.  A developer may not be able to run your app without deploying it with Chef.
+</p>
+
+
+
+<h3>Solution #2 (okay): store your project's cookbook in a totally separate repo</h3>
+
+<p>
+<b>Recommended by</b>
+<a href='http://vialstudios.com/guide-authoring-cookbooks.html'>Jamie Winsor's post</a> (we don't see where the dropbox.com artifacts come from, so I assume it's from another repo)
+</p>
+
+<p><b>Approach</b> Create a separate Git repository for your Chef cookbook.  For example, if your project were named <code>ort</code> you'd have a separate repo named <code>ort-cookbook</code>.  You and every developer will then use librarian-chef or Berksfile to refer to that cookbook from their kitchen.</p>
+
+<p><b>Advantage</b> This option is the easiest to understand, and corresponds best to the Berkshelf and librarian-chef docs.</p>
+
+<p><b>Disadvantage</b> Requires two Git repos. An outside developer could be completely unaware of the second Git repo or neglect to keep the two in sync.</p>
+
+
+
+<h3>Solution #3 (better): embed an entire kitchen inside your project</h3>
+
+<p>
+<b>Recommended by</b>
+<a href='http://www.captnswing.net/2013/01/from-vagrant-to-ec2-with-knife-solo.html'>Frank Hoffsümmer's blog post</a> and <a href='http://www.slideshare.net/SmartLogic/guided-exploration-deploying-rails-apps-with-chef-and-capistrano'>Dan Ivovich's slides</a>
+</p>
+
+<p>
+<b>Approach</b>
+Run <code>kitchen solo init</code> to create a "my_kitchen" directory inside your project.
+Now "my_kitchen" will contain a <code>cookbooks</code> and a <code>site_cookbooks</code> directory.
+According to the <a href='http://matschaffer.github.io/knife-solo/'>Knife solo docs</a>, your custom cookbook(s) should go in <code>site_cookbooks</code> since the <code>cookbooks</code> dir will be managed by Berkshelf or librarian-chef.
+</p>
+
+<p>
+<b>Advantage</b>
+Developers unfamiliar with Chef are given a working example, just by running <code>vagrant up</code>.
+</p>
+
+<p>
+<b>Disadvantages</b>
+<ul>
+  <li>Developers may confuse the <code>cookbooks</code> and the <code>site_cookbooks</code> directory.</li>
+  <li>Non-custom cookbooks will be mixed together with your custom cookbook in the <code>cookbooks</code> directory.</li>
+  <li>Developers may be tempted to deploy to production from this directory, so they'll either commit deployment info (IP addresses, node info, users, passwords, etc.) to Git, or keep them out of Git altogether by using <code>.gitignore</code>.</li>
+  <li>Commits to this info might trigger unwanted continuous integration runs.</li>
+  <li>It's easy to overlook the hidden <code>.chef</code> directory.</li>
+</ul>
+</p>
+
+<h3>Solution #4 (best): embed cookbook inside your project; point to it from kitchen outside project</h3>
+
+<p><b>Recommended by</b> me :-)</p>
+
+<p>
+<b>Approach</b>
+<ol>
+  <li>Install Berkshelf and relevant Vagrant plugins:
+<pre>gem install berkshelf --no-ri --no-rdoc
+vagrant plugin install vagrant-berkshelf
+vagrant plugin install vagrant-omnibus</pre>
+  </li>
+  <li>Create a cookbook directory named <code>cookbook</code> containing a <code>Vagrantfile</code> and <code>Berksfile</code>:
+<pre>berks cookbook cookbook
+cd cookbook
+bundle install
+</pre>
+  </li>
+  <li>Fill out <code>metadata.rb</code> with information for your cookbook.  Cookbook dependencies will go here too, for example: <code>depends 'apt', '~> 2.3.4'</code></li>
+  <li>Tweak the <code>Vagrantfile</code> as needed, for example:<ul>
+    <li>Set the <code>config.vm.hostname</code></li>
+    <li>Change the <code>config.vm.box</code> to <code>"precise32"</code> and <code>config.vm.box_url</code> to <code>"http://files.vagrantup.com/precise32.box"</code> or whatever your prefer, to avoid being dependent on the Berkshelf box.</li>
+    <li>Add <code>config.omnibus.chef_version = :latest</code> since the <code>precise32</code> box won't have chef auto-installed.</li>
+    <li>Delete <code>config.ssh.max_tries</code> and <code>config.ssh.timeout</code>, which are deprecated settings.</li>
+    <li>Add <code>config.vm.boot_timeout = 120</code></li>
+    <li>Add port forwarding if you prefer</li>
+    <li>Change the recipe in the <code>runlist</code> from <code>cookbook</code> to whatever you named the recipe in <code>metadata.rb</code></li>
+    </ul>
+  </li>
+  <li>Start the VM with <code>vagrant up</code>.  It will automatically provision itself using <code>chef-solo</code> using the recipe at <code>recipes/default.rb</code></li>
+  <li>Test your app at http://33.33.33.10/ or http://localhost:8080/ or whatever you have set up.</li>
+  <li>Iterate to improve your cookbook by editing <code>recipes/default.rb</code> and re-running <code>vagrant provision</code>.  Repeat as needed.</li>
+  <li>When you're ready to deploy to staging or production, <code>cd</code> to your kitchen in another directory outside this project, and in your kitchen's <code>Berksfile</code>, refer to your project's cookbook by adding one of the following lines:<ul>
+    <li><code>cookbook 'myproject', git: 'https://github.com/myname/myproject.git', rel: 'cookbook'</code></li>
+    <li><code>cookbook 'myproject', path: '/Users/myname/myproject/cookbook'</code></li>
+  </ul></li>
+</ol>
+</p>
+
+<p>
+<b>Advantages</b>
+<ul>
+  <li>Developers unfamiliar with Chef are given a working example, just by running <code>vagrant up</code>.</li>
+  <li>Non-custom cookbooks are hidden at <code>~/.berkshelf/cookbooks</code>, where developers are unlikely to edit them.</li>
+  <li>The custom cookbook's directories (e.g. <code>recipes</code>, <code>files</code>, etc.) are directly visible under <code>cookbook</code>.</li>
+  <li>The cookbook is stored in the same repo as the project, so the two can stay synchronized.</li>
+</ul>
+</p>
+
+<p><b>Disadvantage</b>
+Well, it is a little confusing to have two <code>Berksfile</code>s (one in your project, one in your kitchen) and three <code>Gemfile</code>s (project dir, cookbook dir, kitchen).
+</p>
+
+<p>
+<i>Agree? Disagree? I'm new to Chef and would love to hear your insight in the comments below.</i>
+</p>
